@@ -21,10 +21,14 @@
  * Date: Feb 16, 2008
 */
 
+// Path on the server ( https://my.site/BASEPATH )
+
 define("BASEPATH","/wblist");
 if(isset($_SERVER["HTTP_HOST"])) {
 	define("BASEURL","https://".$_SERVER["HTTP_HOST"].BASEPATH);
 }
+
+// Change these for your installation.
 
 define("SQL_DB", "amavistest");
 define("SQL_HOST","localhost");
