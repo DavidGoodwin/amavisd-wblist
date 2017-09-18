@@ -1,4 +1,4 @@
-Version 0.01B
+# WBList Version 0.01B 
 
 THIS IS BETA SOFTWARE PLEASE TREAT IT AS SUCH.
 
@@ -15,7 +15,8 @@ on my own.
 
 Copyright (C) 2008 James Bourne <jbourne@hardrock.org>
 
-What is this anyway?
+# What is this anyway?
+
 This is a web based interface to the amavisd-new policy database.  I'm tired
 of having to explain to people why their mail is dropping into their spam
 mailbox so now I can show them.
@@ -31,7 +32,8 @@ then I will work on the interface.  I'm not an interface designer so if I
 never get to it, that's why.  See the comment about patented medicines above
 if the design gives you a headache...
 
-Requirements:
+## Requirements 
+
 1) you have to be running amavisd-new.  I use version 2.5.3, I'm sure it
    will work with 2.5.2 though.
 2) You have to be running a web server, I recommend apache.
@@ -47,7 +49,8 @@ Requirements:
    you are really really smart and have nothing better to do with your time
    then input forms key=value pairs by hand.
 
-Installation instructions:
+## Installation instructions
+
 1) Untar this tarball onto your web server.  I personally use an SSLd server
    and place it within a passworded directory but if you want to let any
    fool change your amavis filtering that's your doing.  I would recommend
@@ -64,8 +67,10 @@ Installation instructions:
    anything.  If not, try adding a sender as that is the easiest form to
    complete.
 
-Operation:
+# Operation
+
 Basically it works like this:
+
 1) You define a policy first.  This defines how the mail will be recieved. 
    Anything left blank or NULL will use the defaults in /etc/amavisd.conf.
 
@@ -85,13 +90,3 @@ Basically it works like this:
 6) Yes it's crude but it is functional.  It does what it needs to do.  Once
    I know this is working right I will work on the interface.  
 
-BTW, if you want something to manage the quarantine, try mailzu
-(http://www.mailzu.net/).  Maybe at some point I can integrate all of this
-into a patch for mailzu.  
-
-If you have any questions or problems or if you want to submit a bug report
-please email me at jbourne@hardrock.org.
-
-James Bourne <jbourne@hardrock.org>
-Calgary, Alberta
-Feb. 18, 2008
