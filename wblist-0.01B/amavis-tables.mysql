@@ -1,0 +1,199 @@
+
+DROP TABLE IF EXISTS `maddr`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `maddr` (
+  `id` bigint(20) unsigned NOT NULL auto_increment,
+  `email` varchar(255) NOT NULL default '',
+  `domain` varchar(255) NOT NULL default '',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `maddr_idx_email` (`email`),
+  KEY `maddr_idx_domain` (`domain`)
+) ENGINE=MyISAM AUTO_INCREMENT=529847 DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+DROP TABLE IF EXISTS `mailaddr`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `mailaddr` (
+  `id` bigint(20) unsigned NOT NULL auto_increment,
+  `priority` int(11) NOT NULL default '7',
+  `email` varchar(255) NOT NULL default '',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `mailaddr_idx_email` (`email`),
+  KEY `email` (`email`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+DROP TABLE IF EXISTS `msg_id_seq`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `msg_id_seq` (
+  `id` bigint(20) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+DROP TABLE IF EXISTS `msgowner`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `msgowner` (
+  `msgid` int(10) unsigned NOT NULL default '0',
+  `rid` int(11) NOT NULL default '0'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+DROP TABLE IF EXISTS `msgrcpt`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `msgrcpt` (
+  `mail_id` varchar(12) NOT NULL default '',
+  `rid` int(10) unsigned NOT NULL default '0',
+  `ds` char(1) NOT NULL default '',
+  `rs` char(1) NOT NULL default '',
+  `bl` char(1) default '',
+  `wl` char(1) default '',
+  `bspam_level` float default NULL,
+  `smtp_resp` varchar(255) default '',
+  KEY `mail_id` (`mail_id`),
+  KEY `rid` (`rid`),
+  KEY `msgrcpt_idx_mail_id` (`mail_id`),
+  KEY `msgrcpt_idx_rid` (`rid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+DROP TABLE IF EXISTS `msgs`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `msgs` (
+  `mail_id` varchar(12) NOT NULL default '',
+  `secret_id` varchar(12) default '',
+  `am_id` varchar(20) NOT NULL default '',
+  `time_num` int(10) unsigned NOT NULL default '0',
+  `time_iso` varchar(16) NOT NULL default '',
+  `sid` int(10) unsigned NOT NULL default '0',
+  `policy` varchar(255) default '',
+  `client_addr` varchar(255) default '',
+  `size` int(10) unsigned NOT NULL default '0',
+  `content` char(1) default NULL,
+  `quar_type` char(1) default NULL,
+  `dsn_sent` char(1) default NULL,
+  `spam_level` float default NULL,
+  `message_id` varchar(255) default '',
+  `from_addr` varchar(255) default '',
+  `subject` varchar(255) default '',
+  `host` varchar(255) NOT NULL default '',
+  `quar_loc` varchar(255) default '',
+  PRIMARY KEY  (`mail_id`),
+  KEY `sid` (`sid`),
+  KEY `msgs_idx_sid` (`sid`),
+  KEY `msgs_idx_mess_id` (`message_id`),
+  KEY `msgs_idx_time_num` (`time_num`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+DROP TABLE IF EXISTS `policy`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `policy` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `policy_name` varchar(32) default NULL,
+  `virus_lover` char(1) default NULL,
+  `spam_lover` char(1) default NULL,
+  `banned_files_lover` char(1) default NULL,
+  `bad_header_lover` char(1) default NULL,
+  `bypass_virus_checks` char(1) default NULL,
+  `bypass_spam_checks` char(1) default NULL,
+  `bypass_banned_checks` char(1) default NULL,
+  `bypass_header_checks` char(1) default NULL,
+  `spam_modifies_subj` char(1) default NULL,
+  `virus_quarantine_to` varchar(64) default NULL,
+  `spam_quarantine_to` varchar(64) default NULL,
+  `banned_quarantine_to` varchar(64) default NULL,
+  `bad_header_quarantine_to` varchar(64) default NULL,
+  `clean_quarantine_to` varchar(64) default NULL,
+  `other_quarantine_to` varchar(64) default NULL,
+  `spam_tag_level` float default NULL,
+  `spam_tag2_level` float default NULL,
+  `spam_kill_level` float default NULL,
+  `spam_dsn_cutoff_level` float default NULL,
+  `spam_quarantine_cutoff_level` float default NULL,
+  `addr_extension_virus` varchar(64) default NULL,
+  `addr_extension_spam` varchar(64) default NULL,
+  `addr_extension_banned` varchar(64) default NULL,
+  `addr_extension_bad_header` varchar(64) default NULL,
+  `warnvirusrecip` char(1) default NULL,
+  `warnbannedrecip` char(1) default NULL,
+  `warnbadhrecip` char(1) default NULL,
+  `newvirus_admin` varchar(64) default NULL,
+  `virus_admin` varchar(64) default NULL,
+  `banned_admin` varchar(64) default NULL,
+  `bad_header_admin` varchar(64) default NULL,
+  `spam_admin` varchar(64) default NULL,
+  `spam_subject_tag` varchar(64) default NULL,
+  `spam_subject_tag2` varchar(64) default NULL,
+  `message_size_limit` int(11) default NULL,
+  `banned_rulenames` varchar(64) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+DROP TABLE IF EXISTS `policy_id_seq`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `policy_id_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+DROP TABLE IF EXISTS `quarantine`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `quarantine` (
+  `mail_id` varchar(12) NOT NULL default '',
+  `chunk_ind` int(10) unsigned NOT NULL default '0',
+  `mail_text` text NOT NULL,
+  PRIMARY KEY  (`mail_id`,`chunk_ind`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+DROP TABLE IF EXISTS `users`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `users` (
+  `id` bigint(20) unsigned NOT NULL auto_increment,
+  `priority` int(11) NOT NULL default '7',
+  `policy_id` int(10) unsigned NOT NULL default '1',
+  `email` varchar(255) NOT NULL default '',
+  `fullname` varchar(255) default NULL,
+  `local` char(1) default NULL,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `users_idx_email` (`email`),
+  KEY `email` (`email`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+DROP TABLE IF EXISTS `users_id_seq`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `users_id_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+DROP TABLE IF EXISTS `wblist`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `wblist` (
+  `rid` int(10) unsigned NOT NULL default '0',
+  `sid` int(10) unsigned NOT NULL default '0',
+  `wb` varchar(10) NOT NULL default '',
+  PRIMARY KEY  (`rid`,`sid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
