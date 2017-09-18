@@ -27,4 +27,3 @@
 <a href="addsender.php">Add sender</a><br>
 <a href="listpolicy.php">List all policies</a><br>
 <a href="addpolicy.php">Add policy</a><br>
-<a href="00README">README file</a><br>

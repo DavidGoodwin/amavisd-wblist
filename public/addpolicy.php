@@ -1,6 +1,6 @@
 <?php
 
-include_once('php/defines.php');
+require_once('common.php');
 
 prn_head("Add Policy Entry");
 prn_body("Add Policy Entry");
