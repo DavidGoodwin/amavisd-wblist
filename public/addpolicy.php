@@ -87,7 +87,7 @@ foreach ($fields as $spec) {
         $spec['size'] = isset($spec['size']) ? $spec['size'] : 6;
         $spec['maxlength'] = isset($spec['maxlength']) ? $spec['maxlength'] : 6;
 
-        echo "<input type='text' class="$advanced_or_normal" name='{$spec['name']}' size='${spec['size']}' maxlength='${spec['maxlength']}'/>";
+        echo "<input type='text' class='{$advanced_or_normal}' name='{$spec['name']}' size='${spec['size']}' maxlength='${spec['maxlength']}'/>";
     }
 
 
