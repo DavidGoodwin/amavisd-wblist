@@ -17,105 +17,83 @@ echo <<<EOF
     
 EOF;
 
-foreach (['virus_lover' => 'Virus Lover',
-             'spam_lover' => 'Spam Lover',
-             'banned_files_lover' => 'Banned Files Lover',
-             'bad_header_lover' => 'Bad Header Lover',
-             'bypass_virus_checks' => 'Bypass Virus Checks',
-             'bypass_spam_checks' => 'Bypass Spam Checks',
-             'bypass_bamned_checks' => 'Bypass Banned File Checks',
-             'bypass_header_checks' => 'Bypass Banned Header Checks',
-             'spam_modifies_subj' => 'Spam Modifies Subject',
-             'warnvirusrecip' => 'Warn Virus Recipient?',
-             'warnbannedrecip' => 'Warn Banned File Recipient?',
-             'wanbadhrecip' => 'Warn Bad Header Recipient?',
+$fields = [
+    ['name' => 'virus_lover', 'label' => 'Virus Lover', 'type' => 'selectyn_'],
+    ['name' => 'spam_lover', 'label' => 'Spam Lover', 'type' => 'selectyn_'],
+    ['name' => 'banned_files_lover', 'label' => 'Banned Files Lover', 'type' => 'selectyn_'],
+    ['name' => 'bypass_virus_checks', 'label' => 'Bypass Virus Checks', 'type' => 'selectyn_'],
+    ['name' => 'bypass_spam_checks', 'label' => 'Bypass Spam Checks', 'type' => 'selectyn_'],
+    ['name' => 'bypass_banned_checks', 'label' => 'Bypass Banned File Checks', 'type' => 'selectyn_'],
+    ['name' => 'bypass_header_checks', 'label' => 'Bypass Header Checks', 'type' => 'selectyn_'],
+    ['name' => 'spam_modifies_subj', 'label' => 'Spam Modifies Subject', 'type' => 'selectyn_'],
+    ['name' => 'warnvirusrecip', 'label' => 'Warn Virus Recipient', 'type' => 'selectyn_'],
+    ['name' => 'warnbannedrecip', 'label' => 'Warn Banned File Recipient', 'type' => 'selectyn_'],
+    ['name' => 'warnbadhrecip', 'label' => 'Warn Bad Header Recipient', 'type' => 'selectyn_'],
 
-         ] as $name => $label) {
-    echo "<tr>
-<td>{$FONT2}$label{$FONTEND}</td>
-<td>{$FONT2}
-<select name='{$name}'>
+    ['name' => 'spam_tag_level', 'label' => 'Insert header tags starting at what level?', 'type' => 'text'],
+    ['name' => 'spam_tag2_level', 'label' => 'Mark as spam startin gat what level?', 'type' => 'text'],
+    ['name' => 'spam_kill_level', 'label' => 'Spam Quarantine only cutoff', 'type' => 'text'],
+    ['name' => 'spam_dsn_cutoff_level', 'label' => 'Do Not send notifications after this level', 'type' => 'text'],
+    ['name' => 'spam_quarantine_cutoff_level', 'label' => 'Do not quarantine after this level', 'type' => 'text'],
+
+
+    ['name' => 'virus_quarantine_to', 'label' => 'Quarantine Virus To?', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength'=> 64],
+    ['name' => 'spam_quarantine_to', 'label' => 'Quarantine Spam To?', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength'=> 64],
+    ['name' => 'banned_quarantine_to', 'label' => 'Quarantine Banned Files to?', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength'=> 64],
+    ['name' => 'bad_header_quarnatine_to', 'label' => 'Bad Header Quarantine To?', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength'=> 64],
+    ['name' => 'other_quarantine_to', 'label' => 'Quarantine All Other Messages To?', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength'=> 64],
+
+    ['name' => 'addr_extension_virus', 'label' => 'Address extension for virus messages', 'advanced' => true, 'type' => 'text', 'size' =>6, 'maxlength'=> 6],
+    ['name' => 'addr_extension_spam', 'label' => 'Address extension for spam messages', 'advanced' => true, 'type' => 'text', 'size' =>6, 'maxlength'=> 6],
+    ['name' => 'addr_extension_banned', 'label' => 'Address extension for banned messages', 'advanced' => true, 'type' => 'text', 'size' =>6, 'maxlength'=> 6],
+    ['name' => 'addr_extension_bad_header', 'label' => 'Address extension for bad header messages', 'advanced' => true, 'type' => 'text', 'size' =>6, 'maxlength'=> 6],
+
+    ['name' => 'newvirus_admin', 'label' => 'New virus admin email to?', 'advanced' => true, 'type' => 'text', 'size' =>30, 'maxlength'=> 64],
+    ['name' => 'virus_admin', 'label' => 'Other virus admin email to?', 'advanced' => true, 'type' => 'text', 'size' =>30, 'maxlength'=> 64],
+    ['name' => 'banned_admin', 'label' => 'Banned header admin email to?', 'advanced' => true, 'type' => 'text', 'size' =>30, 'maxlength'=> 64],
+    ['name' => 'bad_header_admin', 'label' => 'Bad header admin email to?', 'advanced' => true, 'type' => 'text', 'size' =>30, 'maxlength'=> 64],
+    ['name' => 'spam_admin', 'label' => 'Spam admin email to?', 'advanced' => true, 'type' => 'text', 'size' =>30, 'maxlength'=> 64],
+    ['name' => 'spam_subject_tag', 'label' => 'Set Spam Message subject to include...', 'advanced' => true, 'type' => 'text', 'size' =>30, 'maxlength'=> 64],
+    ['name' => 'spam_subject_tag2', 'label' => 'Set Spam Message second level subject to include...', 'advanced' => true, 'type' => 'text', 'size' =>30, 'maxlength'=> 64],
+
+    ['name' => 'message_size_limit', 'label' => 'Maximum Message size to scan (bytes)', 'advanced' => true, 'type' => 'text', 'size' =>10, 'maxlength'=> 10],
+    ['name' => 'banned_rulenames', 'label' => 'Comma seperated list of bad rule names', 'advanced' => true, 'type' => 'text', 'size' =>30, 'maxlength'=> 64],
+
+];
+
+foreach ($fields as $spec) {
+
+    $spec['advanced'] = isset($spec['advanced']) ? $spec['advanced'] : false;
+
+    $advanced_or_normal = $spec['advanced'] ? "advanced" : "normal";
+
+    echo "
+<tr>{$FONT2}{$spec['label']}{$FONTEND}</td>
+      <td>{$FONT2}";
+
+    echo "<label for={$spec['name']}>{$spec['label']}</label>";
+
+    if ($spec['type'] == 'selectyn_') {
+        echo "
+<select name='{$spec['name']}'>
     <option value='Y'>Yes</option>
     <option value='N'>No</option>
-    <option value='' selected>Default</option>
+    <option value='' selected='selected'>Default</option>
     </select>
-    </td>
-    </tr>";
+    ";
+    }
+
+    if ($spec['type'] == 'text') {
+        $spec['size'] = isset($spec['size']) ? $spec['size'] : 6;
+        $spec['maxlength'] = isset($spec['maxlength']) ? $spec['maxlength'] : 6;
+
+        echo "<input type='text' class="$advanced_or_normal" name='{$spec['name']}' size='${spec['size']}' maxlength='${spec['maxlength']}'/>";
+    }
+
+
+    echo "{$FONTEND}</td></tr>";
 }
 
-
-print "<tr><td colspan=2 align=center>" . FONT2 . "These should be floating point if not left blank.<br>\n<b>Warning:</b> setting incorrect values will cause mail to be dropped!" . FONTE . "</td></tr>\n";
-
-foreach(['spam_tag_level' => 'Insert header tags starting at what level?',
-            'spam_tag2_level' => 'Mark as spam starting at what level?',
-            'spam_kill_level' => 'Spam quarantine only cutoff?',
-            'spam_dsn_cutoff_level' => 'Do Not send notifications after this level.',
-            'spam_quarantine_cutoff_level' => 'No longer quarantine after this level.',
-            ] as $name => $label) {
-    echo "<tr><td>{$FONT2}{$label}{$FONTEND}</td>";
-    echo "<td>{$FONT2}<input type='text' name='{$name}' size='6' maxlength='6'>{$FONTEND}</td>td></tr>\n";
-}
-
-print "<tr><td colspan=2><br></td></tr>\n";
-
-print "<tr><td colspan=2 align=center>" . FONT2 . "Leave everything else to the default values (blank) or change <b>ONLY</b> if you know what you are doing!" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Quarantine Virus To?" . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=virus_quarantine_to size=30 maxlength=64>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Quarantine Spam To?" . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=spam_quarantine_to size=30 maxlength=64>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Quarantine Banned Files To?" . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=banned_quarantine_to size=30 maxlength=64>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Quarantine Bad Headers To?" . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=bad_header_quarantine_to size=30 maxlength=64>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Quarantine Clean Messages To?" . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=clean_quarantine_to size=30 maxlength=64>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Quarantine All Other Messages To?" . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=other_quarantine_to size=30 maxlength=64>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Address extension for virus messages." . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=addr_extension_virus size=6 maxlength=6>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Address extension for spam messages." . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=addr_extension_spam size=6 maxlength=6>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Address extension for banned file messages." . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=addr_extension_banned size=6 maxlength=6>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Address extension for bad header messages." . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=addr_extension_bad_header size=6 maxlength=6>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "New virus admin email to?" . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=newvirus_admin size=30 maxlength=64>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Other virus admin email to?" . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=virus_admin size=30 maxlength=64>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Banned file admin email to?" . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=banned_admin size=30 maxlength=64>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Bad header admin email to?" . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=bad_header_admin size=30 maxlength=64>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Spam admin email to?" . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=spam_admin size=30 maxlength=64>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Set Spam message subject to include:" . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=spam_subject_tag size=30 maxlength=64>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Set Spam message subject second level to include:" . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=spam_subject_tag2 size=30 maxlength=64>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Maximum Message Size to Scan (in bytes)." . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=message_size_limit size=10 maxlength=10>" . FONTE . "</td></tr>\n";
-
-print "<tr><td>" . FONT2 . "Comma seperated list of bad rule names." . FONTE . "</td>\n";
-print "<td>" . FONT2 . "<input type=text name=banned_rulenames size=30 maxlength=64>" . FONTE . "</td></tr>\n";
 
 print "<tr><td align=center><input type=\"submit\" value=\"Form\"></td>\n";
 print "<td align=center><input type=\"reset\" value=\"Reset Form\"></td></tr>\n";
