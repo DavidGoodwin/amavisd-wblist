@@ -1,0 +1,21 @@
+{
+  "name": "DavidGoodwin/amavisd-wblist",
+  "description": "Amavisd Admin Web UI.",
+  "keywords": [
+    "php",
+    "amavisd",
+    "sysadmin"
+  ],
+  "license": "GPLv2",
+  "preferred-install": "dist",
+  "require": {
+    "zendframework/zendframework1": "1.12.*",
+    "smarty/smarty": "3.1.*",
+    "psr/log": "1.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "AmavisWblist\\": "include/"
+    }
+  }
+}
