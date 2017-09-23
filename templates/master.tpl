@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>{$title}</title>
+    <title>{$title|default:'Amavisd WbList'}</title>
 </head>
 
 <body>

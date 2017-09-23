@@ -9,7 +9,7 @@
 namespace AmavisWblist\Form;
 
 
-class Receiver extends AbstractForm
+class Sender extends AbstractForm
 {
 
     public function __construct() {
@@ -23,7 +23,7 @@ class Receiver extends AbstractForm
         $form = $this->form;
 
         $form->setMethod('POST');
-        $form->setAction('receiver.php');
+        $form->setAction('sender.php');
 
         $priority = new \Zend_Form_Element_Select('priority');
         $options = [];
@@ -42,19 +42,10 @@ class Receiver extends AbstractForm
         $form->addElement($policy);
 
 
-        $fn = new \Zend_Form_Element_Text('fullname');
-        $fn->setLabel('Full name');
-
-        $fn->setRequired(true);
-        $fn->addValidator(new \Zend_Validate_StringLength(0, 255));
-
-        $form->addElement($fn);
-
         $email = new \Zend_Form_Element_Text('email');
         $email->setRequired(true);
         $email->setLabel("Email Address");
         $form->addElement($email);
-
 
         $id = new \Zend_Form_Element_Hidden('id');
         $id->setRequired(False);

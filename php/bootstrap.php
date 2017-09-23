@@ -5,7 +5,7 @@ require_once(dirname(__FILE__) . '/../include/Config.php');
 $config = [
     // Path on the server ( https://my.site/BASEPATH )
     'BASEPATH' => '/wblist',
-    'DB_DSN' => "pgsql:host=192.168.0.66;dbname=postfix",
+    'DB_DSN' => "pgsql:host=192.168.0.66;dbname=amavis",
     'DB_USERNAME' => "dg",
     "DB_PASSWORD" => "gingerdog",
 

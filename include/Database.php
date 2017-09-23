@@ -26,17 +26,33 @@ class Database
             $this->config = $configObject->getAll();
         }
 
-        $this->connect();
+        $this->db = $this->connect();
+    }
 
+
+    public function queryOne($sql, $params = []) {
+        $rows = $this->query($sql, $params);
+
+        if(sizeof($rows) >= 1) {
+            return $rows[0];
+        }
+        return null;
     }
 
 
     public function query($sql, $params = [])
     {
-
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute($params);
-        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute($params);
+            $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        }
+        catch(\PDOException $e) {
+            var_dump($sql);
+            var_dump($params);
+            var_dump($e->getMessage());
+            die('sql query failed.');
+        }
         return $rows;
     }
 

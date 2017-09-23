@@ -1,5 +1,5 @@
 <pre>
-/*
+/* Originally :
  *  Copyright (C) 2008 James Bourne
  *
  *    This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,7 @@
 </pre>
 
 <a href="search.php">Search</a><br>
-<a href="addreceiver.php">Add receiver</a><br>
-<a href="addsender.php">Add sender</a><br>
+<a href="receiver.php">Add receiver</a><br>
+<a href="sender.php">Add sender</a><br>
 <a href="listpolicy.php">List all policies</a><br>
-<a href="addpolicy.php">Add policy</a><br>
+<a href="policy.php">Add policy</a><br>
