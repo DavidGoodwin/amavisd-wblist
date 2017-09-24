@@ -6,14 +6,13 @@
 <body>
 
 <header>
-    Common header.
 
 </header>
     {include file="$inner_template"}
 
 
 <footer>
-    Common footer
+    <small>Managing and maintaining Amavisd whitelist/blacklist </small>
 </footer>
 </body>
 

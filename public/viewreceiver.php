@@ -92,7 +92,7 @@
     $res = sql_exec($qry, $conn);
     
 	  print "<tr><td colspan=\"4\">&nbsp;</td></tr>\n";
-	  print "<tr><td colspan=\"4\" align=center><a href=\"addwb.php?rid=$id\">Add New White/Black List Entry</a></td></tr>\n";
+	  print ">Add New White/Black List Entry</a></td></tr>\n";
     print "<tr><td colspan=\"2\" align=\"center\">EMail Address</td>";
     print "<td align=\"center\">".FONT2."White/Black/Neutral list".FONTE."</td></tr>\n";
     while($row = mysql_fetch_row($res)) {
