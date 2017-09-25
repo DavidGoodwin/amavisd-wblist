@@ -27,7 +27,7 @@ class Receiver extends AbstractForm
 
         $priority = new \Zend_Form_Element_Select('priority');
         $options = [];
-        foreach (range(1, 10) as $p) {
+        foreach (range(1, 100) as $p) {
             $options[$p] = $p;
         }
         $priority->setLabel('Choose priority');
@@ -36,7 +36,7 @@ class Receiver extends AbstractForm
 
         $form->addElement($priority);
 
-        $policy = new \Zend_Form_Element_Select('policy');
+        $policy = new \Zend_Form_Element_Select('policy_id');
         $policy->setLabel('Choose policy');
 
         $form->addElement($policy);
@@ -62,6 +62,10 @@ class Receiver extends AbstractForm
         $id->addValidator(new \Zend_Validate_GreaterThan(0));
         $form->addElement($id);
 
+        $submit = new \Zend_Form_Element_Submit('submit');
+        $form->addElement($submit);
+
+
     }
 
     public function setPolicys(array $rows) {
@@ -69,7 +73,7 @@ class Receiver extends AbstractForm
         foreach($rows as $key => $value) {
             $options[$value['id']] = $value['policy_name'];
         }
-        $select = $this->form->getElement('policy');
+        $select = $this->form->getElement('policy_id');
 
         $select->setMultiOptions($options);
     }

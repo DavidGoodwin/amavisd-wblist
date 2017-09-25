@@ -9,13 +9,21 @@ $rows = $db->query('SELECT id,policy_name FROM policy');
 
 $form->setPolicys($rows);
 
+if(isset($_GET['id'])) {
+    $row = $db->queryOne("SELECT * FROM users WHERE id = ?", [$_GET['id']]);
+    if(is_resource($row['email'])) {
+        $row['email'] = stream_get_contents($row['email']);
+    }
+    $form->isValid($row);
+}
+
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if($form->isValid($_POST)) {
         $data = $form->getValues();
 
         if(isset($data['id'])) {
             // update?
-            $sql = "UPDATE users SET priority = :priority, email = :email, fullname = :fullname WHERE id = :id";
+            $sql = "UPDATE users SET policy_id = :policy_id, priority = :priority, email = :email, fullname = :fullname WHERE id = :id";
         }
         else {
             // insert?
@@ -25,6 +33,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $database = new \AmavisWblist\Database();
         $database->query($sql, $data);
 
+        header('Location: listreceiver.php');
+        exit(0);
     }
 }
 $template = new \AmavisWblist\Template();
