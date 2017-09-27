@@ -23,7 +23,6 @@ foreach($rows as $row) {
 
 $form->setSenders($senders);
 
-
 $rows = $database->query('SELECT id, email, fullname FROM users ORDER BY email, priority ASC');
 
 $recipients = [];
@@ -41,9 +40,6 @@ foreach($rows as $row) {
 
 $form->setRecipients($recipients);
 
-
 $template = new \AmavisWblist\Template();
-
 $template->assign('form', $form);
-
 $template->display('whitelistblacklist.tpl');

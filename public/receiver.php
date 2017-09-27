@@ -8,6 +8,9 @@ $db = new \AmavisWblist\Database();
 $rows = $db->query('SELECT id,policy_name FROM policy');
 
 $form->setPolicys($rows);
+$template = new \AmavisWblist\Template();
+
+$template->assign('show_wblist', false);
 
 if(isset($_GET['id'])) {
     $row = $db->queryOne("SELECT * FROM users WHERE id = ?", [$_GET['id']]);
@@ -15,6 +18,19 @@ if(isset($_GET['id'])) {
         $row['email'] = stream_get_contents($row['email']);
     }
     $form->isValid($row);
+
+
+    $id = $row['id'];
+    
+    $wblists = $db->query("select distinct wblist.sid,mailaddr.email,wblist.wb from wblist,mailaddr where wblist.rid=:rid and wblist.sid=mailaddr.id", ['rid' => $id]);
+    foreach($wblists as $key => $row) {
+        if(is_resource($row['email'])) {
+            $wblists[$key]['email'] = stream_get_contents($row['email']);
+        }
+    }
+
+    $template->assign('show_wblist', true);
+    $template->assign('wblist', $wblists);
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -37,6 +53,5 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit(0);
     }
 }
-$template = new \AmavisWblist\Template();
 $template->assign('form', $form);
 $template->display('receiver.tpl');

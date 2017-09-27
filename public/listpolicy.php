@@ -7,7 +7,7 @@ $template = new \AmavisWblist\Template();
 $database = new \AmavisWblist\Database();
 
 
-$rows = $database->query('SELECT id,policy_name FROM policy');
+$rows = $database->query('SELECT * FROM policy');
 
 
 $template->assign('rows', $rows);

@@ -40,6 +40,21 @@ class Database
     }
 
 
+    public function beginTransaction() {
+        return $this->db->beginTransaction();
+    }
+
+    public function commit() {
+        return $this->db->commit();
+    }
+
+    public function rollback() {
+        if($this->db->inTransaction()) {
+            return $this->db->rollBack();
+        }
+        return false;
+    }
+
     public function query($sql, $params = [])
     {
         try {

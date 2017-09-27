@@ -26,20 +26,12 @@ class Sender extends AbstractForm
         $form->setAction('sender.php');
 
         $priority = new \Zend_Form_Element_Select('priority');
-        $options = [];
-        foreach (range(1, 10) as $p) {
-            $options[$p] = $p;
-        }
         $priority->setLabel('Choose priority');
-        $priority->setMultiOptions($options);
+        $priority->setMultiOptions(range(0, 20));
 
 
         $form->addElement($priority);
 
-        $policy = new \Zend_Form_Element_Select('policy');
-        $policy->setLabel('Choose policy');
-
-        $form->addElement($policy);
 
 
         $email = new \Zend_Form_Element_Text('email');
@@ -53,15 +45,12 @@ class Sender extends AbstractForm
         $id->addValidator(new \Zend_Validate_GreaterThan(0));
         $form->addElement($id);
 
+        $submit = new \Zend_Form_Element_Submit('submit');
+        $form->addElement($submit);
+
+
     }
 
-    public function setPolicys(array $rows) {
-        $options = [];
-        foreach($rows as $key => $value) {
-            $options[$value['id']] = $value['policy_name'];
-        }
-        $select = $this->form->getElement('policy');
 
-        $select->setMultiOptions($options);
-    }
+
 }

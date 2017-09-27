@@ -2,29 +2,25 @@
 
 require_once('common.php');
 
-  prn_head("Remove WBList");
-  prn_body("Remove WBList");
+if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+    die("Invalid Request");
+}
 
-  /* check input data is there */
-  
-  $rid = $_REQUEST['rid'];
-  $sid = $_REQUEST['sid'];
-  
-  print "<table border=0 width=100%><tr><td align=center>".FONT2;
-  print "<font color=\"green\">Processing removal</font><br>\n";
-  $conn = sql_open();
+if (!isset($_POST['rid']) || !isset($_POST['sid'])) {
+    die('invalid request');
+}
 
-  $qry = "delete from wblist where rid=$rid and sid=$sid";
+$rid = (int)$_POST['rid'];
+$sid = (int)$_POST['sid'];
 
-  $retv = sql_exec($qry, $conn);
-  if(!$retv) {
-    print "<font color=\"red\">Error processing record.  Please review messages and try again.</font><br>\n";
-  } else {
-    print "<font color=\"green\">Successfully removed WBList record.</font><br>\n";
-	}
-	
-  print "<a href=\"".BASEPATH."\">Return</a></td></tr>\n";
-  print "</table>\n";
-  prn_copyend();
-  
-?>
+$params = ['rid' => $rid, 'sid' => $sid];
+
+$database = new \AmavisWblist\Database();
+
+$row = $database->queryOne("SELECT * FROM wblist WHERE rid = :rid AND sid = :sid", $params);
+
+if (empty($row)) {
+    die("Nothing to delete?");
+}
+
+$database->query("DELETE FROM wblist WHERE rid = :rid AND sid = :sid", $params);
