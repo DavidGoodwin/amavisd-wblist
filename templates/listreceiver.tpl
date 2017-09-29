@@ -12,6 +12,8 @@
         <tr>
             <form action="receiver.php" method="POST">
                 <input type="hidden" name="id" value="{$row['id']}">
+                <input type="hidden" name="fullname" value="{$row['fullname']|escape:"htmlall"}"/>
+                <input type="hidden" name="email" value="{$row['email']|escape:"htmlall"}"/>
 
                 <td>
                     <a href="receiver.php?id={$row['id']}">{$row['id']}</a>
@@ -27,13 +29,13 @@
                 </td>
 
                 <td>
-                    <select name="policy">
+                    <select name="policy_id">
                         {foreach from=$policies item=policy}
                             <option value="{$policy['id']}"
                                     {if $row['policy_id'] == $policy['id']}
                                         selected="selected"
                                     {/if}
-                            >{$policy['policy_name']}</option>
+                            >{$policy['policy_name']|escape:htmlall}</option>
                         {/foreach}
                     </select>
 
@@ -50,6 +52,8 @@
     {/foreach}
 
 </table>
+
+
 {*
     // get wblist information, relating senders to mailaddr table
     $qry = "select distinct wblist.sid,mailaddr.email,wblist.wb from wblist,mailaddr where wblist.rid=$id and wblist.sid=mailaddr.id";

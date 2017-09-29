@@ -20,7 +20,11 @@ $database = new \AmavisWblist\Database();
 $row = $database->queryOne("SELECT * FROM wblist WHERE rid = :rid AND sid = :sid", $params);
 
 if (empty($row)) {
-    die("Nothing to delete?");
+    \AmavisWblist\Flash::addError("Nothing to delete; wblist entry already removed?");
+}
+else {
+    $database->query("DELETE FROM wblist WHERE rid = :rid AND sid = :sid", $params);
+    \AmavisWblist\Flash::addMessage("wblist entry removed");
 }
 
-$database->query("DELETE FROM wblist WHERE rid = :rid AND sid = :sid", $params);
+header("Location: listwhitelistblacklist.php");

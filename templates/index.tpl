@@ -4,8 +4,8 @@
 
 <ul>
     <li><a href="policy.php">Add</a> or <a href="listpolicy.php">list/edit/remove</a> policies</li>
-    <li><a href="receiver.php">Add</a> or <a href="listreceiver.php">list/edit/remove</a> receivers of mail</li>
-    <li><a href="sender.php">Add</a> or <a href="listsender.php">list/edit/remove</a> senders</a>??</li>
+    <li><a href="receiver.php">Add</a> or <a href="listreceiver.php">list/edit/remove</a> local users/receivers/recipients of mail</li>
+    <li><a href="sender.php">Add</a> or <a href="listsender.php">list/edit/remove</a> senders</a></li>
     <li><a href="whitelistblacklist.php">Add</a> or <a href="listwhitelistblacklist.php">list/edit/remove</a> Whitelist/blacklist entries</li>
 </ul>
 

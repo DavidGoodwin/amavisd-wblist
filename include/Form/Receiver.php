@@ -27,7 +27,7 @@ class Receiver extends AbstractForm
 
         $priority = new \Zend_Form_Element_Select('priority');
         $options = [];
-        foreach (range(1, 20) as $p) {
+        foreach (range(0, 30) as $p) {
             $options[$p] = $p;
         }
         $priority->setLabel('Choose priority');

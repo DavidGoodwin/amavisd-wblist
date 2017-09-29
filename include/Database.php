@@ -31,6 +31,7 @@ class Database
 
 
     public function queryOne($sql, $params = []) {
+
         $rows = $this->query($sql, $params);
 
         if(sizeof($rows) >= 1) {
@@ -63,6 +64,7 @@ class Database
             $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
         catch(\PDOException $e) {
+            throw $e;
             var_dump($sql);
             var_dump($params);
             var_dump($e->getMessage());

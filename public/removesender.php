@@ -5,7 +5,8 @@ require_once('common.php');
 $database = new \AmavisWblist\Database();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $sender = $database->queryOne('SELECT * FROM mailaddr WHERE id = ?' [$_POST['id']]);
+
+    $sender = $database->queryOne("SELECT * FROM mailaddr WHERE id = ?", [$_POST['id']]);
 
 
     if (empty($sender)) {
@@ -21,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $database->commit();
 
+    \AmavisWblist\Flash::addMessage("Sender deleted!");
     header("Location: listsender.php");
     exit(0);
 }

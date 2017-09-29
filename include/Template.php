@@ -39,6 +39,9 @@ class Template {
 
     public function display($template) {
 
+        $this->assign('flash', Flash::get());
+
+        Flash::reset();
         $this->template->assign('inner_template', $template);
         return $this->template->display('master.tpl');
 

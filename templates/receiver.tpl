@@ -1,7 +1,5 @@
 <h2>Create/Update Receiver</h2>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 {$form}
 
 <h3>Notes</h3>
