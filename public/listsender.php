@@ -5,6 +5,8 @@ require_once('common.php');
 $database = new \AmavisWblist\Database();
 $template = new \AmavisWblist\Template();
 
+$template->setTitle('Sender List');
+
 
 $senders = $database->query('SELECT * FROM mailaddr ORDER BY priority DESC');
 

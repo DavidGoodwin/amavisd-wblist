@@ -1,4 +1,3 @@
-<h2>Whitelist/Blacklist entries</h2>
 
 <style>
     td {
@@ -51,3 +50,5 @@
     {/foreach}
 </table>
 
+
+<a href="whitelistblacklist.php">Add new entry</a>

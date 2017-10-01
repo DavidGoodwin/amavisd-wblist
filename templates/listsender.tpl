@@ -1,5 +1,3 @@
-<h1>Sender List</h1>
-
 
 <table>
     <tr>

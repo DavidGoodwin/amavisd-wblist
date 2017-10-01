@@ -37,5 +37,7 @@ if(isset($_GET['id'])) {
 }
 
 $template = new \AmavisWblist\Template();
+$template->setTitle("Sender");
+
 $template->assign('form', $form);
 $template->display('sender.tpl');

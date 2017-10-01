@@ -18,13 +18,12 @@ class WhitelistBlacklist extends AbstractForm {
         $form->setMethod('post');
 
 // sid
-        $sender = new \Zend_Form_Element_Select('sender');
+        $sender = new \Zend_Form_Element_Select('sid');
         $sender->setRequired(true);
         $sender->setLabel('Sender');
 
-
  // rid
-        $recipient = new \Zend_Form_Element_Select('recipient');
+        $recipient = new \Zend_Form_Element_Select('rid');
         $recipient->setRequired(true);
         $recipient->setLabel("Recipient");
 
@@ -51,7 +50,7 @@ class WhitelistBlacklist extends AbstractForm {
      * @param array $list (id => name, id => name ...)
      */
     public function setSenders(array $list) {
-        $sender = $this->form->getElement('sender');
+        $sender = $this->form->getElement('sid');
 
         /* @var \Zend_Form_Element_Select $sender */
         $sender->setMultiOptions($list);
@@ -62,7 +61,7 @@ class WhitelistBlacklist extends AbstractForm {
      * @param array $list (id => name, id => name ... )
      */
     public function setRecipients(array $list) {
-        $recipient = $this->form->getElement('recipient');
+        $recipient = $this->form->getElement('rid');
 
         /* @var \Zend_Form_Element_Select $recipient */
         $recipient->setMultiOptions($list);

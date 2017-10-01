@@ -6,6 +6,8 @@ $database = new \AmavisWblist\Database();
 $template = new \AmavisWblist\Template();
 
 
+$template->setTitle("Whistlist/Blacklist list");
+
 $senders = $database->query('SELECT 
       wblist.rid as rid,
       wblist.sid as sid,

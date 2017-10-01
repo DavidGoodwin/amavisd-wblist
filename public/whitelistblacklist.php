@@ -1,12 +1,8 @@
 <?php
-
 require_once('common.php');
 
-
 $form = new \AmavisWblist\Form\WhitelistBlacklist();
-
 $database = new \AmavisWblist\Database();
-
 
 $rows =  $database->query('SELECT id, email FROM mailaddr ORDER BY email, priority ASC');
 $senders = [];
@@ -40,6 +36,26 @@ foreach($rows as $row) {
 
 $form->setRecipients($recipients);
 
+
+if($_SERVER['REQUEST_METHOD'] == 'POST' && $form->isValid($_POST)) {
+
+        $data = $form->getValues();
+        $sid = $data['sid'];
+        $rid = $data['rid'];
+        $wb = $data['wb'];
+
+        $existing = $database->queryOne('SELECT * FROM wblist WHERE rid = :rid AND sid = :sid ', [$rid, $sid]);
+        if (!empty($existing)) {
+            $sql = "UPDATE wblist SET wb = :wb WHERE rid = :rid and sid = :sid";
+            \AmavisWblist\Flash::addMessage("Updated entry in whitelist/blacklist");
+        } else {
+            $sql = "INSERT INTO wblist (rid, sid, wb) VALUES (:rid, :sid, :wb)";
+            \AmavisWblist\Flash::addMessage("Added entry to whitelist/blacklist");
+        }
+        $database->query($sql, ['sid' => $sid, 'rid' => $rid, 'wb' => $wb]);
+}
+
 $template = new \AmavisWblist\Template();
+$template->setTitle("Whitelist/Blacklist Entry");
 $template->assign('form', $form);
 $template->display('whitelistblacklist.tpl');

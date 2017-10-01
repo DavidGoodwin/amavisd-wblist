@@ -1,4 +1,3 @@
-<h1>Policy List</h1>
 
 <style>
     td {
@@ -33,7 +32,7 @@
     {foreach from=$rows item=row}
         <tr>
             <td>
-                <a href="viewpolicy.php?id={$row['id']}">{$row['policy_name']|escape:htmlall}</a>
+                <a href="policy.php?id={$row['id']}">{$row['policy_name']|escape:htmlall}</a>
             </td>
             <td>
                 {$row['spam_lover']}

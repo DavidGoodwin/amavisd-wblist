@@ -23,7 +23,7 @@ class Receiver extends AbstractForm
         $form = $this->form;
 
         $form->setMethod('POST');
-        $form->setAction('receiver.php');
+        $form->setAction('recipient.php');
 
         $priority = new \Zend_Form_Element_Select('priority');
         $options = [];

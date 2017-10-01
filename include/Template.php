@@ -37,6 +37,10 @@ class Template {
         $this->variables[$key] = $value;
     }
 
+    public function setTitle($title) {
+        $this->assign('title', $title);
+    }
+
     public function display($template) {
 
         $this->assign('flash', Flash::get());

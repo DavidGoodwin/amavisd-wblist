@@ -5,9 +5,19 @@
 
 <body>
 
-<header>
 
+<style>
+    form {
+        margin-bottom: 0em !important;
+    }
+</style>
+
+
+<header>
+    <p><a href="listrecipient.php">Recipients</a> | <a href="listsender.php">Senders</a> | <a href="listpolicy.php">Policies</a> | <a href="listwhitelistblacklist.php">BlackList/Whitelist</a></p>
 </header>
+
+<h1>{$title|default:'Unspecified title'}</h1>
 
 
 {if !empty($flash['error'])}
@@ -24,6 +34,7 @@
         {/foreach}
     </ul>
 {/if}
+
 
     {include file="$inner_template"}
 

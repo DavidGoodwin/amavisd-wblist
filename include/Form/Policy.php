@@ -26,12 +26,12 @@ class Policy extends AbstractForm {
         ['name' => 'archive_quarantine_to', 'label' => 'Archive Quarantine To', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength' => 64],
 
 
-        ['name' => 'spam_tag_level', 'label' => 'Insert header tags starting at what level?', 'type' => 'float'],
-        ['name' => 'spam_tag2_level', 'label' => 'Mark as spam starting at what level?', 'type' => 'float'],
-        ['name' => 'spam_tag3_level', 'label' => 'spam_tag3_level???', 'type' => 'float'],
-        ['name' => 'spam_kill_level', 'label' => 'Spam Quarantine only cutoff', 'type' => 'float'],
-        ['name' => 'spam_dsn_cutoff_level', 'label' => 'Do Not send notifications after this level', 'type' => 'float'],
-        ['name' => 'spam_quarantine_cutoff_level', 'label' => 'Do not quarantine after this level', 'type' => 'float'],
+        ['name' => 'spam_tag_level', 'label' => 'Spam - Level 1 - Above this level', 'type' => 'float'],
+        ['name' => 'spam_tag2_level', 'label' => 'Spam - Level 2 - Above this level', 'type' => 'float'],
+        ['name' => 'spam_tag3_level', 'label' => 'Spam - Level 3 - Blatent spam', 'type' => 'float'],
+        ['name' => 'spam_kill_level', 'label' => 'Spam - Quarantine above this level', 'type' => 'float'],
+        ['name' => 'spam_dsn_cutoff_level', 'label' => 'Spam - Do Not send notifications above this level', 'type' => 'float'],
+        ['name' => 'spam_quarantine_cutoff_level', 'label' => 'Spam - Do not quarantine above this level', 'type' => 'float'],
 
 
         ['name' => 'addr_extension_virus', 'label' => 'Address extension for virus messages', 'advanced' => true, 'type' => 'text', 'size' => 6, 'maxlength' => 6],
@@ -49,9 +49,9 @@ class Policy extends AbstractForm {
         ['name' => 'banned_admin', 'label' => 'Banned header admin email to?', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength' => 64],
         ['name' => 'bad_header_admin', 'label' => 'Bad header admin email to?', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength' => 64],
         ['name' => 'spam_admin', 'label' => 'Spam admin email to?', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength' => 64],
-        ['name' => 'spam_subject_tag', 'label' => 'Set Spam Message subject to include...', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength' => 64],
-        ['name' => 'spam_subject_tag2', 'label' => 'Set Spam Message second level subject to include...', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength' => 64],
-        ['name' => 'spam_subject_tag3', 'label' => 'Set Spam Message third level subject to include...', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength' => 64],
+        ['name' => 'spam_subject_tag', 'label' => 'Set Spam Level 1 Subject to include ...', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength' => 64],
+        ['name' => 'spam_subject_tag2', 'label' => 'Set Spam Level 2 Subject to include...', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength' => 64],
+        ['name' => 'spam_subject_tag3', 'label' => 'Set Spam Level 3 Subject to include...', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength' => 64],
 
         ['name' => 'message_size_limit', 'label' => 'Maximum Message size to scan (bytes)', 'advanced' => true, 'type' => 'text', 'size' => 10, 'maxlength' => 10],
         ['name' => 'banned_rulenames', 'label' => 'Comma seperated list of bad rule names', 'advanced' => true, 'type' => 'text', 'size' => 30, 'maxlength' => 64],

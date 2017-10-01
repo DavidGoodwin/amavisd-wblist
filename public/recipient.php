@@ -9,7 +9,7 @@ $rows = $db->query('SELECT id,policy_name FROM policy');
 
 $form->setPolicys($rows);
 $template = new \AmavisWblist\Template();
-
+$template->setTitle("Recipient");
 $template->assign('show_wblist', false);
 
 if(isset($_GET['id'])) {
@@ -18,7 +18,6 @@ if(isset($_GET['id'])) {
         $row['email'] = stream_get_contents($row['email']);
     }
     $form->isValid($row);
-
 
     $id = $row['id'];
     
@@ -39,19 +38,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if(isset($data['id'])) {
             // update?
+            $add_updated = "updated";
             $sql = "UPDATE users SET policy_id = :policy_id, priority = :priority, email = :email, fullname = :fullname WHERE id = :id";
         }
         else {
             // insert?
+            $add_updated = "added";
             $sql = "INSERT into users (id, priority, policy_id, email, fullname) VALUES (null, :priority, :policy_id, :email, :fullname)";
         }
 
         $database = new \AmavisWblist\Database();
         $database->query($sql, $data);
 
-        header('Location: listreceiver.php');
+        \AmavisWblist\Flash::addMessage("Recipient $add_updated ");
+
+        header('Location: listrecipient.php');
         exit(0);
     }
 }
 $template->assign('form', $form);
-$template->display('receiver.tpl');
+$template->display('recipient.tpl');
