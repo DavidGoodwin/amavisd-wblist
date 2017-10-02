@@ -25,7 +25,7 @@ If you're running amavisd, you can :
 ## Installation instructions
 
  1. Copy/Clone this stuff to your webserver.
- 2. Edit config.php or copy to config.local.php and then edit.
+ 2. Edit config.php or specify a $config in config.local.php
  3. Get composer ( https://getcomposer.org/ ) and run 'php composer.phar install' or similar.
  4. Make sure there's some restriction on who can access the code (e.g. Apache auth check)
 
