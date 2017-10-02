@@ -36,7 +36,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if($form->isValid($_POST)) {
         $data = $form->getValues();
 
-        if(isset($data['id'])) {
+        if(!empty($data['id'])) {
             // update?
             $add_updated = "updated";
             $sql = "UPDATE users SET policy_id = :policy_id, priority = :priority, email = :email, fullname = :fullname WHERE id = :id";
@@ -44,7 +44,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         else {
             // insert?
             $add_updated = "added";
-            $sql = "INSERT into users (id, priority, policy_id, email, fullname) VALUES (null, :priority, :policy_id, :email, :fullname)";
+            $sql = "INSERT into users (priority, policy_id, email, fullname) VALUES (:priority, :policy_id, :email, :fullname)";
+            unset($data['id']);
         }
 
         $database = new \AmavisWblist\Database();
