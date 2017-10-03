@@ -46,6 +46,8 @@ class Template {
         $this->assign('flash', Flash::get());
 
         Flash::reset();
+
+        header("Content-Type: text/html; charset=utf-8");
         $this->template->assign('inner_template', $template);
         return $this->template->display('master.tpl');
 
