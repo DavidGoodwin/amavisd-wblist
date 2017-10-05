@@ -1,4 +1,3 @@
-<h1>Amavisd Stuff</h1>
 
 <h2>Policies and Whitelist/Blacklist config</h1>
 
