@@ -1,4 +1,6 @@
-<h1>Amavisd Whitelist/Blacklist config</h1>
+<h1>Amavisd Stuff</h1>
+
+<h2>Policies and Whitelist/Blacklist config</h1>
 
 <p>Fine grained control for spam/virus checking...</p>
 
@@ -9,9 +11,12 @@
     <li><a href="whitelistblacklist.php">Add</a> or <a href="listwhitelistblacklist.php">list/edit/remove</a> Whitelist/blacklist entries</li>
 </ul>
 
+<h2>Quarantined Mail</h2>
+
+<a href="amavis-recent-mail.php">Recent emails + quarantined</a>
 
 
-<h3>Useful links</h3>
+<h2>Useful links</h3>
 
 <ul>
     <li><a href="https://www.ijs.si/software/amavisd/README.sql.txt">https://www.ijs.si/software/amavisd/README.sql.txt</a></li>

@@ -5,6 +5,8 @@ require_once('common.php');
 $db = new \AmavisWblist\Database();
 $template = new \AmavisWblist\Template();
 
+$template->setTitle("Recent Email");
+
 if (!empty($_GET)) {
     $_SESSION['last_params'] = $_GET;
 }

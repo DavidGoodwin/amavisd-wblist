@@ -14,7 +14,7 @@
 
 
 <header>
-    <p><a href="listrecipient.php">Recipients</a> | <a href="listsender.php">Senders</a> | <a href="listpolicy.php">Policies</a> | <a href="listwhitelistblacklist.php">BlackList/Whitelist</a></p>
+    <p><a href="listrecipient.php">Recipients</a> | <a href="listsender.php">Senders</a> | <a href="listpolicy.php">Policies</a> | <a href="listwhitelistblacklist.php">BlackList/Whitelist</a> | <a href="amavis-recent-mail.php">Recent Mail</a></p>
 </header>
 
 <h1>{$title|default:'Unspecified title'}</h1>
