@@ -28,7 +28,7 @@
             // mail_id hiding in data-mailid
             console.log('RELEASE');
             $.ajax({
-                url: 'amavis-release.php',
+                url: 'quarantine-release.php',
                 type: 'POST',
                 data: {mail_id: mailid},
                 dataType: 'json',
@@ -45,19 +45,21 @@
 </script>
 {/literal}
 
-<p>Searching on: {$header|implode:", "} -- {$rows|sizeof} rows found</p>
+<p>Searching on: {$header|implode:", "} -- {$raw_count} rows found</p>
 
-<p>Click <a href='amavis-recent-mail.php'>here</a> to remove any filters and see the last hours mail, most recent first.
-</p>
+
+<p><a href='amavis-recent-mail.php'>Remove any filters and see the last hour's mail</a>
 {if !$quarantined_only}
-    <p>Click <a href='amavis-recent-mail.php?quarantined_only=true'>here</a> to show only quarantined mail</p>
+   | <a href='amavis-recent-mail.php?quarantined_only=true'>Show only quarantined mail</a>
 {/if}
+</p>
+
 
 {$form}
 
 
 <table border='1' padding='2'>
-    <Tr>
+    <tr>
         <th>Time {$_up_down_msgs_time_num}</th>
         <th>Sender {$_up_down_s}</th>
         <th>Recipient {$_up_down_r}</th>
@@ -97,5 +99,4 @@
         <td>{$mail['message_id']|truncate:"30":"..."|escape:"htmlall"}</td>
     </tr>
     {/foreach}
-
 </table>

@@ -19,8 +19,13 @@ class QuarantineSearch extends AbstractForm
         $form->setMethod('GET');
         $form->setAction('');
         $restrict_dropdown = new \Zend_Form_Element_Select('show');
-        $restrict_dropdown->setLabel('Restrict To');
-        $restrict_dropdown->setMultiOptions(array('sixty' => 'Last 60 Minutes', 'day' => 'Last 24 hours', 'week' => 'Last Week'));
+        $restrict_dropdown->setLabel('Time restriction');
+        $restrict_dropdown->setMultiOptions(array(
+            'sixty' => 'Last 60 Minutes',
+            'day' => 'Last 24 hours',
+            'week' => 'Last Week',
+            'all' => 'All possible')
+        );
         $restrict_dropdown->setRequired(false);
 
         $form->addElement($restrict_dropdown);

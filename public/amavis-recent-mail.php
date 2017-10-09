@@ -13,28 +13,40 @@ if (!empty($_GET)) {
 
 $quaranatined_only = false;
 $header = array();
-$show_limit_sql = '';
 
-if (!empty($_GET['show'])) {
-    if ($_GET['show'] == 'week') {
-        $header[] = "From the last week";
-        $show_limit_sql = " ";
-    }
-    if ($_GET['show'] == 'day') {
-        $header[] = "Last DAY";
-        $show_limit_sql = " AND now() - time_iso < INTERVAL '1 days'";
-    }
-} else {
-    $header[] = "Last 60 minutes only";
-    $show_limit_sql = "AND now() - time_iso < INTERVAL '60 minutes'";
+$page_size = 500;
+
+
+$sql_where = [];
+
+if(empty($_GET['show'])) {
+    $_GET['show'] = 'sixty';
 }
 
-$level_limit_sql = '';
+if ($_GET['show'] == 'week') {
+    $header[] = "From the last week";
+    $sql_where[] = " now() - time_iso < INTERVAL '7 days' ";
+    // default SQL is for the table to only contain the last week ...
+}
+elseif ($_GET['show'] == 'all') {
+    $header[] = "All time";
+}
+elseif ($_GET['show'] == 'day') {
+    $header[] = "Last day only";
+    $sql_where[] = " now() - time_iso < INTERVAL '1 days' ";
+}
+else {
+    // ($_GET['show'] == 'sixty') {
+    $header[] = "Last 60 minutes only";
+    $sql_where[] = " now() - time_iso < INTERVAL '60 minutes' ";
+}
+
+
 
 if (!empty($_GET['level'])) {
     $level = (int)$_GET['level'];
     $header[] = "Spam level >= $level";
-    $level_limit_sql = " AND bspam_level >= $level ";
+    $sql_where[] = " bspam_level >= $level ";
 }
 
 $ORDERS = array(
@@ -64,7 +76,7 @@ $quaranatined_only_sql = '';
 if (!empty($_GET['quarantined_only']) && $_GET['quarantined_only'] == 'yes') {
     $quarantined_only = true;
     $header[] = "Quarantined";
-    $quaranatined_only_sql = "AND quar_type = 'Q' ";
+    $sql_where[] = " quar_type = 'Q' ";
 }
 
 
@@ -73,7 +85,7 @@ if (!empty($_GET['subject'])) {
     $header[] = " Subject matching " . htmlspecialchars($_GET['subject']);
     $subject = $_GET['subject'];
     $subject = $db->quote("%$subject%");
-    $subject_sql = "AND msgs.subject ILIKE $subject ";
+    $sql_where[] = "AND msgs.subject ILIKE $subject ";
 }
 $CONTENT_VALUES = array('A' => 'All', 'V' => 'Virus', 'B' => 'Banned', 'S' => 'Spam (kill)', 's' => 'Spammy', 'M' => 'Bad Mime Headers', 'H' => 'Bad Headers', 'O' => 'Oversized', 'C' => 'Clean');
 
@@ -82,9 +94,13 @@ $content_sql = '';
 if (!empty($_GET['content'])) {
     $content = $_GET['content'];
     if ($content != 'A' && isset($CONTENT_VALUES[$content])) {
-        $content_sql = "AND msgs.content = '{$_GET['content']}' ";
+        $sql_where[] = " msgs.content = '{$_GET['content']}' ";
     }
     $header[] = "Type : {$CONTENT_VALUES[$content]} ";
+}
+
+if(!empty($sql_where)) {
+    $where_sql = " AND " . implode(" AND ", $sql_where);
 }
 
 $sql = "SELECT now()-time_iso AS age, 
@@ -106,9 +122,10 @@ $sql = "SELECT now()-time_iso AS age,
         FROM msgs LEFT JOIN msgrcpt ON msgs.mail_id=msgrcpt.mail_id 
         LEFT JOIN maddr AS sender ON msgs.sid=sender.id 
         LEFT JOIN maddr AS recip  ON msgrcpt.rid=recip.id 
-        WHERE msgs.content IS NOT NULL $content_sql $subject_sql $level_limit_sql $show_limit_sql $quaranatined_only_sql $order_sql";
+        WHERE msgs.content IS NOT NULL $where_sql $order_sql";
 
 #  content    char(1),                   -- content type: V/B/S/s/M/H/O/C: -- virus/banned/spam(kill)/spammy(tag2)/bad-mime/bad-header/oversized/clean
+
 
 
 try {
@@ -118,8 +135,16 @@ catch(\PDOException $e) {
     die("DB query failed: $sql ... " . $e->getMessage());
 }
 
+$raw_count = sizeof($rows);
 
 
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 0;
+$offset = $page_size * $page;
+
+$pager = new Zend_Paginator_Adapter_Array($rows);
+$rows = $pager->getItems($offset, $page_size);
+
+$template->assign('raw_count', $raw_count); // total results
 
 $template->assign('header', $header);
 
@@ -172,7 +197,6 @@ foreach($rows as $k => $r) {
 
 
 $template->assign('rows', $rows);
-
 
 $template->display('amavis-recent-mail.tpl');
 

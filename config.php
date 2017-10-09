@@ -4,6 +4,7 @@ $config = [
     'DB_DSN' => "pgsql:host=192.168.0.66;dbname=amavis",
     'DB_USERNAME' => "dg",
     "DB_PASSWORD" => "gingerdog",
+    "RELEASE_DIR" => '/srv/amavis/release/'
 ];
 
 // allow this to orderride config...
