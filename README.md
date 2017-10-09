@@ -1,5 +1,4 @@
-# Amavis Policy/Whiteblacklist ....
-
+# Amavis Policy/Whiteblacklist/Quarantine viewer ....
 
 This was originally based on WBList Version 0.01B  (see: http://www.hardrock.org/wblist/ )
 
@@ -8,12 +7,17 @@ It's been mostly rewritten and updated.
 
 ## What is it ?
 
-This is a web based interface to the amavisd-new policy database.  
+This is a web based interface to some amavisd-new things.
 
-If you're running amavisd, you can :
+ * Policy database - how mails to defined recipients are treated (spam threshold, AV checks etc)
+ * Quarantined emails - if a policy defines it, mail will be quarantined ... you can view and release them here
+ * Whitelist/Blacklist - some senders you do (or don't!) like....
+
+So if you're running amavisd, this can help you -
 
  * Create policy rules (who should receive spam/viruses etc, what scoring thresholds there are etc)
  * Create whitelist or blacklist entries (i.e. allow anyone from: @google.com to email bob@example.com, or block foo@bar.com from emailing bob@example.com).
+ * View and release quarantined emails ....
 
 
 ## Requirements 
