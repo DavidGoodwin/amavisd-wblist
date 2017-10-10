@@ -19,7 +19,7 @@ $page_size = 500;
 
 $sql_where = [];
 
-if(empty($_GET['show'])) {
+if (empty($_GET['show'])) {
     $_GET['show'] = 'sixty';
 }
 
@@ -27,20 +27,16 @@ if ($_GET['show'] == 'week') {
     $header[] = "From the last week";
     $sql_where[] = " now() - time_iso < INTERVAL '7 days' ";
     // default SQL is for the table to only contain the last week ...
-}
-elseif ($_GET['show'] == 'all') {
+} elseif ($_GET['show'] == 'all') {
     $header[] = "All time";
-}
-elseif ($_GET['show'] == 'day') {
+} elseif ($_GET['show'] == 'day') {
     $header[] = "Last day only";
     $sql_where[] = " now() - time_iso < INTERVAL '1 days' ";
-}
-else {
+} else {
     // ($_GET['show'] == 'sixty') {
     $header[] = "Last 60 minutes only";
     $sql_where[] = " now() - time_iso < INTERVAL '60 minutes' ";
 }
-
 
 
 if (!empty($_GET['level'])) {
@@ -99,7 +95,9 @@ if (!empty($_GET['content'])) {
     $header[] = "Type : {$CONTENT_VALUES[$content]} ";
 }
 
-if(!empty($sql_where)) {
+$where_sql = '';
+
+if (!empty($sql_where)) {
     $where_sql = " AND " . implode(" AND ", $sql_where);
 }
 
@@ -127,50 +125,26 @@ $sql = "SELECT now()-time_iso AS age,
 #  content    char(1),                   -- content type: V/B/S/s/M/H/O/C: -- virus/banned/spam(kill)/spammy(tag2)/bad-mime/bad-header/oversized/clean
 
 
-
 try {
     $rows = $db->query($sql);
-}
-catch(\PDOException $e) {
+} catch (\PDOException $e) {
     die("DB query failed: $sql ... " . $e->getMessage());
 }
 
 $raw_count = sizeof($rows);
 
 
-$page = isset($_GET['page']) ? (int) $_GET['page'] : 0;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 0;
 $offset = $page_size * $page;
 
-$pager = new Zend_Paginator_Adapter_Array($rows);
-$rows = $pager->getItems($offset, $page_size);
+$pager = Zend_Paginator::factory($rows);
+$pager->setCurrentPageNumber($page);
+$pager->setItemCountPerPage($page_size);
+$pager->setPageRange(25);
 
-$template->assign('raw_count', $raw_count); // total results
+$rows = $pager->getCurrentItems();
 
-$template->assign('header', $header);
-
-$template->assign('quarantined_only', $quaranatined_only);
-
-
-$form = new \AmavisWblist\Form\QuarantineSearch();
-$form->setContentOptions($CONTENT_VALUES);
-
-
-//$form->getElement('content')->setMultiOptions($CONTENT_VALUES);
-
-$form->isValid($_GET);
-
-$template->assign('form', $form);
-
-$template->assign('_up_down_msgs_time_num', _up_down('msgs.time_num'));
-$template->assign('_up_down_s', _up_down('s'));
-$template->assign('_up_down_r', _up_down('r'));
-$template->assign('_up_down_subj', _up_down('subj'));
-
-
-
-
-
-foreach($rows as $k => $r) {
+foreach ($rows as $k => $r) {
 
     if (is_resource($r['mail_id'])) {
         $mail_id = stream_get_contents($r['mail_id']);
@@ -184,7 +158,6 @@ foreach($rows as $k => $r) {
     $r['mail_id'] = $mail_id;
     $r['base64_message_id'] = $base64_message_id;
 
-
     $r['recipient'] = stream_get_contents($r['r']);
     $r['sender'] = stream_get_contents($r['s']);
 
@@ -196,11 +169,36 @@ foreach($rows as $k => $r) {
 }
 
 
+$template->assign('pages', $pager->getPages());
+
+parse_str($_SERVER['QUERY_STRING'], $bits);
+unset($bits['page']);
+$query_string_without_page = http_build_query($bits);
+
+$template->assign('query_string_without_page', $query_string_without_page);
+
 $template->assign('rows', $rows);
+$template->assign('raw_count', $raw_count); // total results
+$template->assign('header', $header);
+$template->assign('quarantined_only', $quaranatined_only);
+
+
+$form = new \AmavisWblist\Form\QuarantineSearch();
+$form->setContentOptions($CONTENT_VALUES);
+
+$form->isValid($_GET);
+
+$template->assign('form', $form);
+
+
+
+$template->assign('_up_down_msgs_time_num', _up_down('msgs.time_num'));
+$template->assign('_up_down_s', _up_down('s'));
+$template->assign('_up_down_r', _up_down('r'));
+$template->assign('_up_down_subj', _up_down('subj'));
+
 
 $template->display('amavis-recent-mail.tpl');
-
-
 
 
 function _up_down($field)
@@ -209,7 +207,7 @@ function _up_down($field)
     $url = $_SERVER['SCRIPT_NAME'];
 
     $params = [];
-    if(!empty($_SERVER['QUERY_STRING'])) {
+    if (!empty($_SERVER['QUERY_STRING'])) {
         parse_str($_SERVER['QUERY_STRING'], $params);
     }
 
@@ -227,10 +225,6 @@ function _up_down($field)
     }
     return '';
 }
-
-
-
-
 
 
 function _translate_content($c)

@@ -1,5 +1,7 @@
-<html>
+<html lang="en">
 <head>
+    <meta http-equiv="Content-Language" content="yourlanguage" />
+    <meta http-equiv="content-type" content= "text/html; utf-8">
     <title>{$title|default:'Amavisd Configuration'}</title>
 </head>
 
@@ -14,7 +16,7 @@
 
 
 <header>
-    <p><a href="listrecipient.php">Recipients</a> | <a href="listsender.php">Senders</a> | <a href="listpolicy.php">Policies</a> | <a href="listwhitelistblacklist.php">BlackList/Whitelist</a> | <a href="amavis-recent-mail.php">Recent Mail</a></p>
+    <p><a href="listrecipient.php">Recipients</a> | <a href="listsender.php">Senders</a> | <a href="listpolicy.php">Policies</a> | <a href="listwhitelistblacklist.php">BlackList/Whitelist</a> | <a href="amavis-recent-mail.php">Quarantined / Recent Mail</a></p>
 </header>
 
 <h1>{$title|default:'Unspecified title'}</h1>

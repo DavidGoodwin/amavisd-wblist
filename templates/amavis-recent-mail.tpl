@@ -57,6 +57,8 @@
 
 {$form}
 
+{include file="pagination-control.tpl"}
+
 
 <table border='1' padding='2'>
     <tr>
