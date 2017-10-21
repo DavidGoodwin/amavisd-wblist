@@ -14,7 +14,7 @@ $database = new \AmavisWblist\Database();
 $template = new \AmavisWblist\Template();
 
 
-$mail = $db->queryOne('SELECT * FROM quarantine WHERE mail_id = ?', [$mail_id]);
+$mail = $database->queryOne('SELECT * FROM quarantine WHERE mail_id = ?', [$mail_id]);
 
 if(empty($mail)) {
     \AmavisWblist\Flash::addError("Mail not found");
