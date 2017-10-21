@@ -56,6 +56,7 @@ class Database
         return false;
     }
 
+    // NEEDSFIX INSERT / UPDATE cannot be fetchAll-ed https://stackoverflow.com/a/24541316/4771006
     public function query($sql, $params = [])
     {
         try {
