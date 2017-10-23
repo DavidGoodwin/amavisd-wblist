@@ -96,7 +96,7 @@ class Database
         $db_user = $config['DB_USERNAME'];
         $db_password = $config['DB_PASSWORD'];
 
-        $pdo = new \PDO($dsn, $db_user, $db_password, array(\PDO::MYSQL_ATTR_FOUND_ROWS => true));
+        $pdo = new \PDO($dsn, $db_user, $db_password);
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         return $pdo;
     }

@@ -25,17 +25,17 @@ if (empty($_GET['show'])) {
 
 if ($_GET['show'] == 'week') {
     $header[] = "From the last week";
-    $sql_where[] = " time_iso >= DATE_SUB(NOW(), INTERVAL 7 DAY) ";
+    $sql_where[] = " time_iso >= NOW() - INTERVAL '7' DAY ";
     // default SQL is for the table to only contain the last week ...
 } elseif ($_GET['show'] == 'all') {
     $header[] = "All time";
 } elseif ($_GET['show'] == 'day') {
     $header[] = "Last day only";
-    $sql_where[] = " time_iso >= DATE_SUB(NOW(), INTERVAL 1 DAY) ";
+    $sql_where[] = " time_iso >= NOW() - INTERVAL '1' DAY ";
 } else {
     // ($_GET['show'] == 'sixty') {
     $header[] = "Last 60 minutes only";
-    $sql_where[] = " time_iso >= DATE_SUB(NOW(), INTERVAL 1 HOUR) ";
+    $sql_where[] = " time_iso >= NOW() - INTERVAL '1' HOUR ";
 }
 
 
