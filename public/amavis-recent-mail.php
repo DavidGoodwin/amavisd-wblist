@@ -158,8 +158,16 @@ foreach ($rows as $k => $r) {
     $r['mail_id'] = $mail_id;
     $r['base64_message_id'] = $base64_message_id;
 
-    $r['recipient'] = stream_get_contents($r['r']);
-    $r['sender'] = stream_get_contents($r['s']);
+    if (is_resource($r['r'])) {
+        $r['recipient'] = stream_get_contents($r['r']);
+    } else {
+        $r['recipient'] = $r['r'];
+    }
+    if (is_resource($r['s'])) {
+        $r['sender'] = stream_get_contents($r['s']);
+    } else {
+        $r['sender'] = $r['s'];
+    }
 
     $r['content'] = _translate_content($r['c']);
     $r['delivery_status'] = _translate_content($r['ds']);

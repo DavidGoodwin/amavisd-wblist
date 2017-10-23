@@ -27,6 +27,8 @@ if(is_resource($mail['mail_text'])) {
 
 }
 
+$template->setTitle("Quarantine View");
+
 $template->assign('mail', $mail['mail_text']);
 
 $template->display('quarantine-view.tpl');

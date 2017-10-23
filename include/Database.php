@@ -56,13 +56,23 @@ class Database
         return false;
     }
 
-    // NEEDSFIX INSERT / UPDATE cannot be fetchAll-ed https://stackoverflow.com/a/24541316/4771006
     public function query($sql, $params = [])
     {
+        $querytype = substr($sql,0,6);
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute($params);
-            $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            switch($querytype) {
+                case "INSERT":
+                case "UPDATE":
+                case "INSERT":
+                    $rows_affected = $stmt->rowCount();
+                    $rows = array('rows_affected' => $rows_affected );
+                    break;
+                case "SELECT":
+                    $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                    break;
+                }
         }
         catch(\PDOException $e) {
             throw $e;
@@ -86,7 +96,7 @@ class Database
         $db_user = $config['DB_USERNAME'];
         $db_password = $config['DB_PASSWORD'];
 
-        $pdo = new \PDO($dsn, $db_user, $db_password);
+        $pdo = new \PDO($dsn, $db_user, $db_password, array(\PDO::MYSQL_ATTR_FOUND_ROWS => true));
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         return $pdo;
     }
