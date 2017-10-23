@@ -58,10 +58,21 @@ class Database
 
     public function query($sql, $params = [])
     {
+        $querytype = substr($sql,0,6);
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute($params);
-            $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            switch($querytype) {
+                case "INSERT":
+                case "UPDATE":
+                case "INSERT":
+                    $rows_affected = $stmt->rowCount();
+                    $rows = array('rows_affected' => $rows_affected );
+                    break;
+                case "SELECT":
+                    $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                    break;
+                }
         }
         catch(\PDOException $e) {
             throw $e;

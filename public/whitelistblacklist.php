@@ -44,7 +44,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $form->isValid($_POST)) {
         $rid = $data['rid'];
         $wb = $data['wb'];
 
-        $existing = $database->queryOne('SELECT * FROM wblist WHERE rid = :rid AND sid = :sid ', [$rid, $sid]);
+        $existing = $database->queryOne('SELECT * FROM wblist WHERE rid = :rid AND sid = :sid ', ['rid' => $rid, 'sid' => $sid]);
         if (!empty($existing)) {
             $sql = "UPDATE wblist SET wb = :wb WHERE rid = :rid and sid = :sid";
             \AmavisWblist\Flash::addMessage("Updated entry in whitelist/blacklist");
