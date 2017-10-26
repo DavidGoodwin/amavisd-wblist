@@ -58,13 +58,21 @@ function _do_post(\AmavisWblist\Form\Policy $form, array $post)
     if (isset($_POST['id']) && $_POST['id'] > 0) { // blindly assume an update
         $sql = "UPDATE policy SET {$updates} WHERE id = :id";
         $values['id'] = (int)$_POST['id'];
-        $upate = true;
+        $update = true;
     } else {
         $update = false;
         $sql = "INSERT INTO policy ($fields) VALUES ($qmarks)";
     }
-    $database = new \AmavisWblist\Database();
-    $database->query($sql, $values);
+
+    try {
+        $database = new \AmavisWblist\Database();
+        $database->query($sql, $values);
+    }
+    catch(\PDOException $e) {
+        error_log("Error trying to create/update policy" . json_encode(['message' => $e->getMessage(), 'sql' => $sql, 'values' => $values]);
+        \AmavisWblist\Flash::addError("Update failed; check logs.");
+        return false;
+    }
 
     if($update) {
         \AmavisWblist\Flash::addMessage("Policy updated");
