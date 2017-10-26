@@ -63,8 +63,16 @@ function _do_post(\AmavisWblist\Form\Policy $form, array $post)
         $update = false;
         $sql = "INSERT INTO policy ($fields) VALUES ($qmarks)";
     }
-    $database = new \AmavisWblist\Database();
-    $database->query($sql, $values);
+
+    try {
+	    $database = new \AmavisWblist\Database();
+	    $database->query($sql, $values);
+    }
+    catch(\PDOException $e) {
+        error_log("Error trying to create/update policy" . json_encode(['message' => $e->getMessage(), 'sql' => $sql, 'values' => $values]);
+        \AmavisWblist\Flash::addError("Update failed; check logs.");
+	return false;
+    }
 
     if($update) {
         \AmavisWblist\Flash::addMessage("Policy updated");
