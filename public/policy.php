@@ -69,7 +69,7 @@ function _do_post(\AmavisWblist\Form\Policy $form, array $post)
         $database->query($sql, $values);
     }
     catch(\PDOException $e) {
-        error_log("Error trying to create/update policy" . json_encode(['message' => $e->getMessage(), 'sql' => $sql, 'values' => $values]);
+        error_log("Error trying to create/update policy" . json_encode(['message' => $e->getMessage(), 'sql' => $sql, 'values' => $values]));
         \AmavisWblist\Flash::addError("Update failed; check logs.");
         return false;
     }
