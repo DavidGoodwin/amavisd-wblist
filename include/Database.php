@@ -58,7 +58,7 @@ class Database
 
     public function query($sql, $params = [])
     {
-        $querytype = substr($sql,0,6);
+        $querytype = strtoupper(substr($sql,0,6));
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute($params);

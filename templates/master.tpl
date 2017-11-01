@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Language" content="yourlanguage" />
+    <meta http-equiv="Content-Language" content="en" />
     <meta http-equiv="content-type" content= "text/html; utf-8">
     <title>{$title|default:'Amavisd Configuration'}</title>
 </head>
