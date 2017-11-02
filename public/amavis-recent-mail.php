@@ -39,10 +39,12 @@ if ($_GET['show'] == 'week') {
 }
 
 
-if (!empty($_GET['level'])) {
-    $level = (int)$_GET['level'];
-    $header[] = "Spam level >= $level";
-    $sql_where[] = " bspam_level >= $level ";
+if (array_key_exists('level', $_GET)) {
+    if($_GET['level'] !== '') {
+        $level = (int) $_GET['level'];
+        $header[] = "Spam level >= $level";
+        $sql_where[] = " bspam_level >= $level ";
+    }
 }
 
 $ORDERS = array(

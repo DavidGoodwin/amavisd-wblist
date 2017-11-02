@@ -32,7 +32,7 @@ class QuarantineSearch extends AbstractForm
 
         $level = new \Zend_Form_Element_Select('level');
         $level->setLabel('Spam Level >=');
-        $level->setMultiOptions(range(0, 10));
+        $level->setMultiOptions(['' => 'Any'] + range(-2, 10));
         $level->setRequired(false);
 
         $form->addElement($level);

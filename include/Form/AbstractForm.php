@@ -33,22 +33,6 @@ abstract class AbstractForm implements Form
 
         $form = $this->form;
 
-/*
-        // see http://blog.kosev.net/2010/06/tutorial-create-zend-framework-form/
-        $form->setDecorators(array(
-            'FormElements',
-            array('HtmlTag', array('tag' => 'span')),
-            'Form'
-        ));
-        $form->setElementDecorators(array(
-            'ViewHelper',
-            'Errors',
-            array(array('data' => 'HtmlTag'), array('tag' => 'span')),
-            array('Label', array('tag' => 'span')),
-            array(array('row' => 'HtmlTag'), array('tag' => 'div'))
-        ));
-
-*/
         return $form->render(new \Zend_View());
     }
 }
