@@ -17,7 +17,7 @@
         <th>Recipient email</th>
         <th>Recipient name</th>
         <th>Priority</th>
-        <th>Policy Name</th>
+        <th>State</th>
         <th>Actions</th>
     </tr>
     {foreach from=$senders item=row}
