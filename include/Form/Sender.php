@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: palepurple
- * Date: 22/09/2017
- * Time: 21:56
- */
 
 namespace AmavisWblist\Form;
 
@@ -21,22 +15,19 @@ class Sender extends AbstractForm
     {
 
         $form = $this->form;
-
         $form->setMethod('POST');
         $form->setAction('sender.php');
 
         $priority = new \Zend_Form_Element_Select('priority');
         $priority->setLabel('Choose priority');
         $priority->setMultiOptions(range(0, 20));
-
-
         $form->addElement($priority);
-
-
 
         $email = new \Zend_Form_Element_Text('email');
         $email->setRequired(true);
         $email->setLabel("Email Address");
+        $email->addFilter(new \Zend_Filter_StringTrim());
+        $email->addFilter(new \Zend_Filter_StringToLower());
         $form->addElement($email);
 
         $id = new \Zend_Form_Element_Hidden('id');
@@ -48,9 +39,5 @@ class Sender extends AbstractForm
         $submit = new \Zend_Form_Element_Submit('submit');
         $form->addElement($submit);
 
-
     }
-
-
-
 }

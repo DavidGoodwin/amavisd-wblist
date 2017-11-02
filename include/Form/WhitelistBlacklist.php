@@ -30,18 +30,15 @@ class WhitelistBlacklist extends AbstractForm {
         $form->addElement($sender);
         $form->addElement($recipient);
 
-// wb
-
-        //  wb     | character varying(10) | not null <- why varchar(10) ????? Score???
+        //  wb     | character varying(10) | not null 
         $wb = new \Zend_Form_Element_Select('wb');
         $wb->setRequired(true);
-        // wb can contain a -> 'S' => 'Score' - which would allow you to e.g. add 10 spam points on for a specific domain
+        // wb can contain a -> 'S' => 'Score' - which would allow you to e.g. add 5 spam points on for a specific domain
         // however, that would break the Zend Form validator ... so I've not bothered ....
         // See: https://www.ijs.si/software/amavisd/amavisd-new-docs.html
         $wb->setMultiOptions(['W' => 'Whitelist', 'B' => 'Blacklist', 'N' => 'Neutral', ] );
 
         $form->addElement($wb);
-
         $form->addElement(new \Zend_Form_Element_Submit('submit'));
     }
 

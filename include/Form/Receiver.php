@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: palepurple
- * Date: 22/09/2017
- * Time: 21:56
- */
 
 namespace AmavisWblist\Form;
 
@@ -44,6 +38,8 @@ class Receiver extends AbstractForm
 
         $fn = new \Zend_Form_Element_Text('fullname');
         $fn->setLabel('Full name');
+        $fn->addFilter(new \Zend_Filter_StringToLower());
+        $fn->addFilter(new \Zend_Filter_StringTrim());
 
         $fn->setRequired(true);
         $fn->addValidator(new \Zend_Validate_StringLength(0, 255));
@@ -53,6 +49,8 @@ class Receiver extends AbstractForm
         $email = new \Zend_Form_Element_Text('email');
         $email->setRequired(true);
         $email->setLabel("Email Address");
+        $email->addFilter(new \Zend_Filter_StringToLower());
+        $email->addFilter(new \Zend_Filter_StringTrim());
         $form->addElement($email);
 
 
@@ -64,7 +62,6 @@ class Receiver extends AbstractForm
 
         $submit = new \Zend_Form_Element_Submit('submit');
         $form->addElement($submit);
-
 
     }
 
