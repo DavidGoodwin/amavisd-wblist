@@ -77,14 +77,21 @@ if (!empty($_GET['quarantined_only']) && $_GET['quarantined_only'] == 'yes') {
     $sql_where[] = " quar_type = 'Q' ";
 }
 
+if (!empty($_GET['sender'])) {
+	$sender = $_GET['sender'];
+	$header[] = 'Sender matching ' . htmlspecialchars($_GET['sender']);
+	$sender = $db->quote("%$sender%");
+	$sql_where[] = "sender.email LIKE $sender ";
+}
 
 $subject_sql = '';
 if (!empty($_GET['subject'])) {
-    $header[] = " Subject matching " . htmlspecialchars($_GET['subject']);
     $subject = $_GET['subject'];
+    $header[] = 'Subject matching ' . htmlspecialchars($subject);
     $subject = $db->quote("%$subject%");
-    $sql_where[] = "AND msgs.subject ILIKE $subject ";
+    $sql_where[] = "msgs.subject ILIKE $subject ";
 }
+
 $CONTENT_VALUES = array('A' => 'All', 'V' => 'Virus', 'B' => 'Banned', 'S' => 'Spam (kill)', 's' => 'Spammy', 'M' => 'Bad Mime Headers', 'H' => 'Bad Headers', 'O' => 'Oversized', 'C' => 'Clean');
 
 $content_sql = '';

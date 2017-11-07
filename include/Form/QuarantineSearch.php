@@ -44,6 +44,16 @@ class QuarantineSearch extends AbstractForm
 
         $form->addElement($type_dropdown);
 
+        $sender = new \Zend_Form_Element_Text('sender');
+        $sender->setLabel('Sender Like');
+        $sender->setRequired(False);
+        $form->addElement($sender);
+
+        $recipient = new \Zend_Form_Element_Text('recipient');
+        $recipient->setLabel('Recipient Like');
+        $recipient->setRequired(False);
+        $form->addElement($recipient);
+
         $subject = new \Zend_Form_Element_Text('subject');
         $subject->setLabel('Subject');
         $subject->setRequired(False);
