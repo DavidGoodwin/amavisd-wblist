@@ -40,6 +40,14 @@ class Database
         return null;
     }
 
+ 
+
+    /**
+     * ought to make $string safe for embedding within SQL.... 
+     */
+    public function quote($string) {
+	return $this->db->quote($string);
+    }
 
     public function beginTransaction() {
         return $this->db->beginTransaction();
