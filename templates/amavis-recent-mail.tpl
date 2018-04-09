@@ -84,7 +84,13 @@
             {if $mail['quar_type'] == 'Q'}
                 <a href="quarantine-view.php?mail_id={$mail['mail_id']}">{$mail['subj']}</a>
             {else}
+		{if $mail['in_archive']}
+		<a title="View in Archive" href="archive-view.php?message_id={$mail['base64_message_id']}">
+		{/if}
                 {$mail['subj']|truncate:"75"|escape:"htmlall"}
+		{if $mail['in_archive']}
+		</a>
+		{/if}
             {/if}
         </td>
 

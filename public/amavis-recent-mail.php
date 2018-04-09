@@ -5,6 +5,9 @@ require_once('common.php');
 $db = new \AmavisWblist\Database();
 $template = new \AmavisWblist\Template();
 
+$configObject = \AmavisWblist\Config::getInstance();
+$config = $configObject->getAll();
+
 $template->setTitle("Recent Email");
 
 if (!empty($_GET)) {
@@ -174,6 +177,14 @@ foreach ($rows as $k => $r) {
     $r['mail_id'] = $mail_id;
     $r['base64_message_id'] = $base64_message_id;
 
+
+    $in_archive = false;
+    if(is_callable($config['in_archive'])) {
+	    $in_archive = $config['in_archive']($message_id);
+    }
+
+    $r['in_archive'] = $in_archive;
+
     if (is_resource($r['r'])) {
         $r['recipient'] = stream_get_contents($r['r']);
     } else {
@@ -191,7 +202,6 @@ foreach ($rows as $k => $r) {
 
     $rows[$k] = $r;
 }
-
 
 $template->assign('pages', $pager->getPages());
 
