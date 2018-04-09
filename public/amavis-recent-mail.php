@@ -46,6 +46,13 @@ if (array_key_exists('level', $_GET)) {
         $sql_where[] = " bspam_level >= $level ";
     }
 }
+if (array_key_exists('levellt', $_GET)) {
+    if($_GET['levellt'] !== '') {
+        $levellt = (int) $_GET['levellt'];
+        $header[] = "Spam level <= $levellt";
+        $sql_where[] = " bspam_level <= $levellt ";
+    }
+}
 
 $ORDERS = array(
     'msgs.time_num' => 'Time',
