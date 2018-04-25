@@ -11,10 +11,11 @@
   "require": {
     "zendframework/zendframework1": "1.12.*",
     "smarty/smarty": "3.1.*",
+    "php-mime-mail-parser/php-mime-mail-parser": "^2.11.0",
     "psr/log": "1.*"
   },
   "require-dev": {
-      "jakub-onderka/php-parallel-lint": "^0.9.2"
+    "jakub-onderka/php-parallel-lint": "^0.9.2"
   },
   "autoload": {
     "psr-4": {
