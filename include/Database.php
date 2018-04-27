@@ -11,7 +11,9 @@ namespace AmavisWblist;
 
 class Database
 {
-    /* @var \PDO */
+    /**
+     * @var \PDO 
+     **/
     private $db;
 
     /**
@@ -19,17 +21,25 @@ class Database
      */
     private $config;
 
+    /**
+     * @param array $config
+     */
     public function __construct(array $config = []) {
 
         if(empty($config)) {
             $configObject = \AmavisWblist\Config::getInstance();
-            $this->config = $configObject->getAll();
+            $config = $configObject->getAll();
         }
-
+        $this->config = $config;
         $this->db = $this->connect();
     }
 
 
+    /**
+     * @param string $sql
+     * @param array $params
+     * @return array|null
+     */
     public function queryOne($sql, $params = []) {
 
         $rows = $this->query($sql, $params);
@@ -44,19 +54,30 @@ class Database
 
     /**
      * ought to make $string safe for embedding within SQL.... 
+     * @param string $string
+     * @return string
      */
     public function quote($string) {
-	return $this->db->quote($string);
+        return $this->db->quote($string);
     }
 
+    /**
+     * @return bool
+     */
     public function beginTransaction() {
         return $this->db->beginTransaction();
     }
 
+    /**
+     * @return bool
+     */
     public function commit() {
         return $this->db->commit();
     }
 
+    /**
+     * @return bool
+     */
     public function rollback() {
         if($this->db->inTransaction()) {
             return $this->db->rollBack();
@@ -64,8 +85,14 @@ class Database
         return false;
     }
 
+    /**
+     * @param string $sql
+     * @param array $params
+     * @return array
+     */
     public function query($sql, $params = [])
     {
+        $rows = [];
         $querytype = strtoupper(substr($sql,0,6));
         try {
             $stmt = $this->db->prepare($sql);

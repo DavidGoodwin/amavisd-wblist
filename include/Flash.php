@@ -6,6 +6,11 @@ namespace AmavisWblist;
 
 class Flash
 {
+    /**
+     * @param string $type
+     * @param string $message
+     * @return void
+     */
     public static function add($type, $message)
     {
         if (!isset($_SESSION['flash'])) {
@@ -14,16 +19,27 @@ class Flash
         $_SESSION['flash'][$type][$message] = $message;
     }
 
+    /**
+     * @param string $message
+     * @return void
+     */
     public static function addMessage($message)
     {
-        return self::add('message', $message);
+        self::add('message', $message);
     }
 
+    /**
+     * @param string $error
+     * @return void
+     */
     public static function addError($error)
     {
-        return self::add('error', $error);
+        self::add('error', $error);
     }
 
+    /**
+     * @return array
+     */
     public static function get()
     {
         if (!isset($_SESSION['flash'])) {
@@ -32,6 +48,9 @@ class Flash
         return $_SESSION['flash'];
     }
 
+    /**
+     * @return void
+     */
     public static function reset()
     {
         $_SESSION['flash'] = ['message' => [], 'error' => []];

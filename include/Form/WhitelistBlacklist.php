@@ -11,6 +11,9 @@ class WhitelistBlacklist extends AbstractForm {
         $this->initialize();
     }
 
+    /**
+     * @return void
+     */
     protected function initialize() {
 
         $form = $this->form;
@@ -45,22 +48,29 @@ class WhitelistBlacklist extends AbstractForm {
     /**
      * USed to populate the sender drop down
      * @param array $list (id => name, id => name ...)
+     * @return void
      */
     public function setSenders(array $list) {
         $sender = $this->form->getElement('sid');
 
         /* @var \Zend_Form_Element_Select $sender */
-        $sender->setMultiOptions($list);
+        if($sender !== null) { 
+            $sender->setMultiOptions($list);
+        }
     }
 
     /**
      * Used to populate the recipient drop down.
      * @param array $list (id => name, id => name ... )
+     * @return void
      */
     public function setRecipients(array $list) {
         $recipient = $this->form->getElement('rid');
 
         /* @var \Zend_Form_Element_Select $recipient */
-        $recipient->setMultiOptions($list);
+
+        if($recipient !== null) { 
+            $recipient->setMultiOptions($list);
+        }
     }
 }

@@ -4,6 +4,9 @@ namespace AmavisWblist\Form;
 
 class Policy extends AbstractForm {
 
+    /**
+     * @var array
+     */
     private $fields = [
         ['name' => 'policy_name', 'label' => 'Policy Name', 'type' => 'text', 'size' => 30, 'maxlength' => 255, 'required' => true],
         ['name' => 'virus_lover', 'label' => 'Virus Lover', 'type' => 'selectyn_'],
@@ -74,6 +77,9 @@ class Policy extends AbstractForm {
         $this->initialize();
     }
 
+    /**
+     * @return void
+     */
     protected function initialize() {
 
         $form = $this->form;

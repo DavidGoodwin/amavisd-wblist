@@ -14,9 +14,15 @@ $template->assign('show_wblist', false);
 
 if (isset($_GET['id'])) {
     $row = $db->queryOne("SELECT * FROM users WHERE id = ?", [$_GET['id']]);
+
+    if($row === null) {
+        die("404; mail not found");
+    }
     if (is_resource($row['email'])) {
         $row['email'] = stream_get_contents($row['email']);
     }
+
+    // populate.
     $form->isValid($row);
 
     $id = $row['id'];

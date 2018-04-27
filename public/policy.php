@@ -13,6 +13,9 @@ if (!empty($_POST)) {
 // view policy...
 if (isset($_GET['id'])) {
     $policy = $database->queryOne('SELECT * FROM policy WHERE id = ?', [$_GET['id']]);
+    if($policy == null) {
+        die("404; policy not found");
+     }
     $form->isValid($policy);
 }
 
@@ -23,18 +26,21 @@ $template->display('policy.tpl');
 
 
 
-
+/**
+ * @return void
+ */
 function _do_post(\AmavisWblist\Form\Policy $form, array $post)
 {
     if (!$form->isValid($post)) {
         \AmavisWblist\Flash::addError("Form validation failed; check messages");
-        return false;
+        return;
     }
 
     $data = $form->getValues();
     $qmarks = [];
     $values = [];
     $updates = [];
+    $fields = [];
     foreach ($data as $key => $value) {
         if ($key == 'id') {
             continue;
@@ -71,7 +77,7 @@ function _do_post(\AmavisWblist\Form\Policy $form, array $post)
     catch(\PDOException $e) {
         error_log("Error trying to create/update policy" . json_encode(['message' => $e->getMessage(), 'sql' => $sql, 'values' => $values]));
         \AmavisWblist\Flash::addError("Update failed; check logs.");
-        return false;
+        return;
     }
 
     if($update) {

@@ -3,6 +3,7 @@
 require_once(dirname(__FILE__) . '/../vendor/autoload.php');
 
 /* gives us $config */
+$config = [];
 require_once(dirname(__FILE__) . '/../config.php');
 
 $c = \AmavisWblist\Config::getInstance();

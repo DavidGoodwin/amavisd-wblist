@@ -12,6 +12,9 @@ class QuarantineSearch extends AbstractForm
         $this->initialize();
     }
 
+    /**
+     * @return void
+     */
     public function initialize()
     {
 
@@ -81,8 +84,15 @@ class QuarantineSearch extends AbstractForm
 
     }
 
+    /**
+     * @return void
+     * @param array $whatever
+     */
     public function setContentOptions(array $whatever)
     {
-        $this->form->getElement('content')->setMultiOPtions($whatever);
+        $el = $this->form->getElement('content');
+        if($el !== null) { 
+            $el->setMultiOPtions($whatever);
+        }
     }
 }

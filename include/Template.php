@@ -4,8 +4,20 @@ namespace AmavisWblist;
 
 class Template {
 
+    /**
+     * @var \Smarty
+     */
     private $template;
+
+    /**
+     * @var array
+     */
     private $variables = [];
+
+    /**
+     * @var Template
+     */
+    private static $instance;
 
     public function __construct() {
         $this->template = new \Smarty();
@@ -17,6 +29,9 @@ class Template {
 
     }
 
+    /**
+     * @return self
+     */
     public function getInstance() {
 
         if(self::$instance == null) {
@@ -26,6 +41,11 @@ class Template {
         return self::$instance;
     }
 
+    /**
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
     public function assign($key, $value) {
         if($value instanceof Form) {
 
@@ -37,10 +57,18 @@ class Template {
         $this->variables[$key] = $value;
     }
 
+    /**
+     * @param string $title
+     * @return void
+     */
     public function setTitle($title) {
         $this->assign('title', $title);
     }
 
+    /**
+     * @param string $template - file name we want to use for display
+     * @return  void
+     */
     public function display($template) {
 
         $this->assign('flash', Flash::get());
@@ -49,7 +77,7 @@ class Template {
 
         header("Content-Type: text/html; charset=utf-8");
         $this->template->assign('inner_template', $template);
-        return $this->template->display('master.tpl');
+        $this->template->display('master.tpl');
 
     }
 }

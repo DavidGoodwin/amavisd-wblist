@@ -14,25 +14,37 @@ use AmavisWblist\Form;
 abstract class AbstractForm implements Form
 {
 
+    /**
+     * @var \Zend_Form
+     */
     protected $form;
 
     public function __construct() {
         $this->form = new \Zend_Form();
     }
 
+    /**
+     * @return bool
+     */
     public function isValid(array $data) {
         return $this->form->isValid($data);
     }
 
+
+    /**
+     * @return array
+     */
     public function getValues()
     {
         return $this->form->getValues();
     }
 
+
+   /**
+    * @return string
+    */ 
     public function render() {
-
         $form = $this->form;
-
         return $form->render(new \Zend_View());
     }
 }

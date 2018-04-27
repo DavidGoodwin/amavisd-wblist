@@ -11,6 +11,9 @@ class Receiver extends AbstractForm
         $this->initialize();
     }
 
+    /**
+     * @return void
+     */
     public function initialize()
     {
 
@@ -65,13 +68,18 @@ class Receiver extends AbstractForm
 
     }
 
+    /**
+     * @return void
+     * @param array $rows
+     */
     public function setPolicys(array $rows) {
         $options = [];
         foreach($rows as $key => $value) {
             $options[$value['id']] = $value['policy_name'];
         }
         $select = $this->form->getElement('policy_id');
-
-        $select->setMultiOptions($options);
+        if($select !== null) { 
+            $select->setMultiOptions($options);
+        }
     }
 }

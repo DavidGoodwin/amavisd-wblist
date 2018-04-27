@@ -11,6 +11,9 @@ class Sender extends AbstractForm
         $this->initialize();
     }
 
+    /**
+     * @return void
+     */
     public function initialize()
     {
 
