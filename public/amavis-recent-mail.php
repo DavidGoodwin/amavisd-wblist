@@ -94,6 +94,13 @@ if (!empty($_GET['sender'])) {
 	$sql_where[] = "sender.email LIKE $sender ";
 }
 
+if (!empty($_GET['recipient'])) {
+	$recipient = $_GET['recipient'];
+	$header[] = 'Recipient matching ' . htmlspecialchars($_GET['recipient']);
+	$recipient = $db->quote("%$recipient%");
+	$sql_where[] = "recip.email LIKE $recipient ";
+}
+
 $subject_sql = '';
 if (!empty($_GET['subject'])) {
     $subject = $_GET['subject'];
@@ -163,8 +170,16 @@ $pager->setPageRange(25);
 
 $rows = $pager->getCurrentItems();
 
+$archive_check = [];
 foreach ($rows as $k => $r) {
+    $archive_check[$k] = $r['message_id'];
+}
 
+if(is_callable($config['in_archive'])) {
+    $archive_lookup = $config['in_archive']($archive_check);
+}
+
+foreach($rows as $k => $r) {
     if (is_resource($r['mail_id'])) {
         $mail_id = stream_get_contents($r['mail_id']);
     } else {
@@ -179,9 +194,13 @@ foreach ($rows as $k => $r) {
 
 
     $in_archive = false;
-    if(is_callable($config['in_archive'])) {
-	    $in_archive = $config['in_archive']($message_id);
+    $archive_url = false;
+    if(isset($archive_lookup[$k]) && $archive_lookup[$k]['in_archive']) {
+        $in_archive = true;
+        $archive_url = $archive_check[$k]['url']; /* perhaps? */
     }
+
+    $r['archive_url'] = $archive_url;
 
     $r['in_archive'] = $in_archive;
 
@@ -235,6 +254,12 @@ $template->assign('_up_down_subj', _up_down('subj'));
 $template->display('amavis-recent-mail.tpl');
 
 
+/**
+ * Find $field in $_SERVER['QUERY_STRING'] and change to do Up/Down links...
+ *
+ * @param string $field - field we want to do the asc/desc string for.
+ * @return string (html)
+ */
 function _up_down($field)
 {
     global $ORDERS;
@@ -261,11 +286,15 @@ function _up_down($field)
 }
 
 
+/**
+ * @param string $c
+ * @return string
+ */
 function _translate_content($c)
 {
     /* Note: duplication with $CONTENT_VALUES */
     if ($c == 'A') {
-        return false;
+        return '';
     }
     if ($c == 'V') {
         return 'Virus';
@@ -294,6 +323,10 @@ function _translate_content($c)
     return $c;
 }
 
+/**
+ * @param string $c
+ * @return string
+ */
 function _translate_ds($c)
 {
     if ($c == 'P') {
