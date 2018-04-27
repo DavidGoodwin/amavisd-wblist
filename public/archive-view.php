@@ -6,8 +6,8 @@ $configObject = \AmavisWblist\Config::getInstance();
 $config = $configObject->getAll();
 
 
-if(!isset($_GET['message_id'])) {
-	die("Missing message_id");
+if (!isset($_GET['message_id'])) {
+    die("Missing message_id");
 }
 
 
@@ -15,8 +15,41 @@ if(!isset($_GET['message_id'])) {
 
 $message_id = $_GET['message_id'];
 $message_id = base64_decode($message_id);
-$row = $config['in_archive']($message_id);
-if(is_array($row)) {
-	echo "<pre>" . htmlentities($row['message'], ENT_QUOTES, 'UTF-8', false) . "</pre>";
+if (!is_callable($config['get_from_archive'])) {
+    die("can't run - need a callable in \$config['get_from_archive'] ... which takes a message_id to retrieve and returns the email. ");
 }
+
+$mail = $config['get_from_archive']([message_id]);
+if (!empty($row)) {
+
+    echo "<h2>General</h2>";
+    echo "<p><strong>From</strong>: " . $mail['mail_from'] . "</p>";
+    echo "<p><strong>to</strong> - " . $mail['mail_to'] . " </p>";
+    echo "<p>Subject : " . strip_tags($mail['subject']) . "</p>";
+
+
+    $pmail = new PhpMimeMailParser\Parser();
+    $pmail->setText($mail['message']);
+
+    echo "<h2>Attachments</h2>";
+
+    foreach ($pmail->getAttachments() as $attachment) {
+        echo " - Attachment: " . $attachment->getFilename();
+        echo $attachment->getContentType() . "\n";
+
+    }
+
+    $text = $pmail->getMessageBody('text');
+    $html = $pmail->getMessageBody('html');
+
+    echo "<h2>Text Plain</h2>";
+    echo "<pre>" . $text . "</pre>";
+
+
+    // should really render in some sort of iframe.
+    echo "<h2>Html content</h2>";
+    echo $html;
+
+}
+
 exit(0);
