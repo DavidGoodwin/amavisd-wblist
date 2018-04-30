@@ -4,6 +4,41 @@
 {literal}
 <script>
     $(document).ready(function () {
+        $('.archive-markasham').click(function () {
+            message_id = jQuery(this).data('message_id');
+            button = jQuery(this);
+            $.ajax({
+                url: 'amavis-report.php',
+                type: 'POST',
+                data: {message_id: message_id, mark_as: "ham" },
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    button.removeClass('archive-markasham');
+                    button.replaceWith('<p>' + result.message + '</p>');
+                    //jQuery(button).append(result.message);
+                    console.log(result);
+                }
+            });
+        });
+        $('.archive-markasspam').click(function () {
+            message_id = jQuery(this).data('message_id');
+            button = jQuery(this);
+            // mail_id hiding in data-mailid
+            $.ajax({
+                url: 'amavis-report.php',
+                type: 'POST',
+                data: {message_id: message_id, mark_as: "spam" },
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    button.removeClass('archive-markasspam');
+                    button.replaceWith('<p>' + result.message + '</p>');
+                    //jQuery(button).append(result.message);
+                    console.log(result);
+                }
+            });
+        });
         $('.markasham').click(function () {
             mailid = jQuery(this).data('mailid');
             button = jQuery(this);
@@ -120,7 +155,12 @@
                     <button>View</button>
                 </a>
                 <button class='releasefromquarantine' data-mailid='{$mail['mail_id']} '>Release</button>
-            {/if}
+                <button class='markasham' data-mailid='{$mail['mail_id']} '>Mark as HAM</button>
+                <button class='markasspam' data-mailid='{$mail['mail_id']} '>Mark as Spam</button>
+            {else}
+                <button class='archive-markasham' data-mailid='{$mail['base64_message_id']} '>Mark as HAM</button>
+                <button class='archive-markasspam' data-mailid='{$mail['base64_message_id']} '>Mark as SPAM</button>
+           {/if}
         </td>
         <td>{$mail['message_id']|truncate:"30":"..."|escape:"htmlall"}</td>
     </tr>

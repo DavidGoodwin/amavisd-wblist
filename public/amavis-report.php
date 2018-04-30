@@ -35,11 +35,14 @@ if(!empty($_POST['mail_id'])) {
 }
 elseif(!empty($_POST['message_id'])) {
 
+    $message_id = $_POST['message_id'];
+    $message_id = base64_decode($message_id);
+
+
     if(!is_callable($config['get_from_archive'])) {
         echo json_encode(array('status' => 'fail', 'message' => 'config wrong (no archive support)'));
         exit(0);
     } 
-
     
     $mail = $config['get_from_archive']($message_id);
 
