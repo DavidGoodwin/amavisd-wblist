@@ -4,15 +4,33 @@
 {literal}
 <script>
     $(document).ready(function () {
+        $('.markasham').click(function () {
+            mailid = jQuery(this).data('mailid');
+            button = jQuery(this);
+            // mail_id hiding in data-mailid
+            $.ajax({
+                url: 'amavis-report.php',
+                type: 'POST',
+                data: {mail_id: mailid, mark_as: "ham" },
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    button.removeClass('markasham');
+                    button.replaceWith('<p>' + result.message + '</p>');
+                    //jQuery(button).append(result.message);
+                    console.log(result);
+                }
+            });
+        });
         $('.markasspam').click(function () {
             mailid = jQuery(this).data('mailid');
             button = jQuery(this);
             // mail_id hiding in data-mailid
             $.ajax({
-                url: amavis - report - ham.php
+                url: 'amavis-report.php',
                 type: 'POST',
-                data: {mail_id: mailid},
-                dataType: 'json',
+                data: {mail_id: mailid, mark_as: "spam" },
+                dataType: "json",
                 success: function (result) {
                     console.log(result);
                     button.removeClass('markasspam');
