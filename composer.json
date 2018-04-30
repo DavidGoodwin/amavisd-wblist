@@ -24,6 +24,11 @@
     }
   },
   "scripts": {
-    "lint": "php vendor/bin/parallel-lint --exclude vendor/ ."
+    "lint": "php vendor/bin/parallel-lint --exclude vendor/ .",
+    "psalm": "php vendor/bin/psalm ",
+    "build" : [
+        "@lint",
+        "@psalm"
+    ]
   }
 }
