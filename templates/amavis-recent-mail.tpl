@@ -154,12 +154,12 @@
                 <a href="quarantine-view.php?mail_id={$mail['mail_id']}">
                     <button>View</button>
                 </a>
-                <button class='releasefromquarantine' data-mailid='{$mail['mail_id']} '>Release</button>
-                <button class='markasham' data-mailid='{$mail['mail_id']} '>Mark as HAM</button>
-                <button class='markasspam' data-mailid='{$mail['mail_id']} '>Mark as Spam</button>
+                <button class='releasefromquarantine' data-mailid='{$mail['mail_id']}'>Release</button>
+                <button class='markasham' data-mailid='{$mail['mail_id']}'>Mark as HAM</button>
+                <button class='markasspam' data-mailid='{$mail['mail_id']}'>Mark as Spam</button>
             {else}
-                <button class='archive-markasham' data-mailid='{$mail['base64_message_id']} '>Mark as HAM</button>
-                <button class='archive-markasspam' data-mailid='{$mail['base64_message_id']} '>Mark as SPAM</button>
+                <button class='archive-markasham' data-mailid='{$mail['base64_message_id']}'>Mark as HAM</button>
+                <button class='archive-markasspam' data-mailid='{$mail['base64_message_id']}'>Mark as SPAM</button>
            {/if}
         </td>
         <td>{$mail['message_id']|truncate:"30":"..."|escape:"htmlall"}</td>
