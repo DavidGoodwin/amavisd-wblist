@@ -58,7 +58,7 @@ if(isset($_POST['mark_as']) && $_POST['mark_as'] == 'spam') {
     $what = 'spam';
 }
 
-file_put_contents($sa_learn_dir . '/' . md5($mail) . '-learn-' . $what, $mail_body);
+file_put_contents($sa_learn_dir . '/' . md5($mail_body) . '-learn-' . $what, $mail_body);
 
 echo json_encode(array('status' => 'success', 'message' => "Added to $what queue"));
 exit(0);
