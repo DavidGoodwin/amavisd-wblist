@@ -6,10 +6,10 @@ $configObj = \AmavisWblist\Config::getInstance();
 
 $config = $configObj->getAll();
 
-$sa_learn_dir = $configObj->get('sa-learn-dir');
+$sa_learn_dir = $configObj->get('TRAINING_DIR');
 
-if(empty($sa_learn_dir)) {
-    echo json_encode(array('status' => 'fail', 'message' => 'no sa_learn_dir - check config'));
+if(empty($sa_learn_dir) || !is_writeable($sa_learn_dir)) {
+    echo json_encode(array('status' => 'fail', 'message' => 'TRAINING_DIR invalid; check config'));
     exit(1);
 }
 

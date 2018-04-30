@@ -5,7 +5,9 @@ $config = [
     'DB_USERNAME' => "dg",
     "DB_PASSWORD" => "gingerdog",
     "RELEASE_DIR" => '/srv/amavis/release/',
-    "in_archive" => false, // replace with a closure like function(array $message_id_list) { .... };
+    "TRAINING_DIR" => '/srv/amavis/training/',
+    "in_archive" => false, // replace with a closure like function(array $message_id_list) { return [ 0 => ['message_id' => 'x', 'in_archive' => true, 'url' => '??' ], 1 => [ ..... ] .... ]};
+    "get_from_archive" => false, // replace with a closure like function($message_id) { return ['mail_text' => 'raw boy', 'mail_from' => 'smtp return path', 'mail_to' => 'smtp to', 'subject' => 'whatever']; };
 ];
 
 /*
