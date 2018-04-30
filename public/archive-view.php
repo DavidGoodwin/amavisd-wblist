@@ -19,8 +19,8 @@ if (!is_callable($config['get_from_archive'])) {
     die("can't run - need a callable in \$config['get_from_archive'] ... which takes a message_id to retrieve and returns the email. ");
 }
 
-$mail = $config['get_from_archive']([message_id]);
-if (!empty($row)) {
+$mail = $config['get_from_archive']($message_id);
+if (!empty($mail)) {
 
     echo "<h2>General</h2>";
     echo "<p><strong>From</strong>: " . $mail['mail_from'] . "</p>";
