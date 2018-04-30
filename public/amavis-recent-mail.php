@@ -35,6 +35,9 @@ if ($_GET['show'] == 'week') {
 } elseif ($_GET['show'] == 'day') {
     $header[] = "Last day only";
     $sql_where[] = " time_iso >= NOW() - INTERVAL '1' DAY ";
+} elseif ($_GET['show'] == 'custom' ) {
+    $header[] = "Between Friday 7pm and Monday 23rd April 2018 10am";
+    $sql_where[] = " time_iso >= '2018-04-20 19:00' AND time_iso <= '2018-04-23 10:00' ";
 } else {
     // ($_GET['show'] == 'sixty') {
     $header[] = "Last 60 minutes only";
@@ -109,6 +112,8 @@ if (!empty($_GET['subject'])) {
     $sql_where[] = "msgs.subject ILIKE $subject ";
 }
 
+
+
 $CONTENT_VALUES = array('A' => 'All', 'V' => 'Virus', 'B' => 'Banned', 'S' => 'Spam (kill)', 's' => 'Spammy', 'M' => 'Bad Mime Headers', 'H' => 'Bad Headers', 'O' => 'Oversized', 'C' => 'Clean');
 
 $content_sql = '';
@@ -169,6 +174,16 @@ $pager->setItemCountPerPage($page_size);
 $pager->setPageRange(25);
 
 $rows = $pager->getCurrentItems();
+$search_count = 0;
+
+$in_archive_list = [];
+$lookup = [];
+foreach($rows as $k => $r) {
+	$lookup[$k] = $r['message_id'];
+}
+if(is_callable($config['in_archive'])) {
+	$in_archive_list = $config['in_archive']($lookup);
+}
 
 $archive_check = [];
 foreach ($rows as $k => $r) {
@@ -195,9 +210,9 @@ foreach($rows as $k => $r) {
 
     $in_archive = false;
     $archive_url = false;
-    if(isset($archive_lookup[$k]) && $archive_lookup[$k]['in_archive']) {
-        $in_archive = true;
-        $archive_url = $archive_check[$k]['url']; /* perhaps? */
+
+    if(isset($in_archive_list[$k]) && $in_archive_list[$k]['in_archive']) {
+	$in_archive=true;
     }
 
     $r['archive_url'] = $archive_url;

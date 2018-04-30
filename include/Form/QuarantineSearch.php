@@ -25,6 +25,7 @@ class QuarantineSearch extends AbstractForm
         $restrict_dropdown->setLabel('Time restriction');
         $restrict_dropdown->setMultiOptions(array(
             'sixty' => 'Last 60 Minutes',
+	    'custom' => 'Friday 7pm to Mon 23rd April 10am',
             'day' => 'Last 24 hours',
             'week' => 'Last Week',
             'all' => 'All possible')
