@@ -13,7 +13,7 @@ if(!empty($_POST['mail_id'])) {
 
     $file = tempnam($release_destination, "release");
 
-    $amavis_key = preg_replace('/[^_-a-z0-9]/i', '', $_POST['mail_id']);
+    $amavis_key = preg_replace('/[^-a-z0-9_]/i', '', $_POST['mail_id']);
 
     // create a single file per thing to release... a cron job just needs to run every so often
     //
