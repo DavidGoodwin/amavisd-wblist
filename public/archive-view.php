@@ -36,8 +36,14 @@ if (!empty($mail)) {
     foreach ($pmail->getAttachments() as $attachment) {
         echo " - Attachment: " . $attachment->getFilename();
         echo $attachment->getContentType() . "\n";
-
     }
+
+    echo "<h2>Headers</h2>";
+    list($header_text, $rest) = explode("\n\n", $mail['message']);
+
+    echo "<pre>$header_text</pre>";
+    echo "<br/>";
+
 
     $text = $pmail->getMessageBody('text');
     $html = $pmail->getMessageBody('html');
