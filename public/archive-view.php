@@ -1,5 +1,7 @@
 <?php
 
+/* this isn't particularly secure as we're obviously rendering content from third parties */
+
 require_once(dirname(__FILE__) . '/common.php');
 
 $configObject = \AmavisWblist\Config::getInstance();
@@ -38,6 +40,12 @@ if (!empty($mail)) {
         echo $attachment->getContentType() . "\n";
 
     }
+
+    echo "<h2>Headers</h2>";
+    list($header_text, $rest) = explode("\n\n", $mail['message']);
+    echo "<pre>$header_text</pre>";
+    echo "<br/>";
+
 
     $text = $pmail->getMessageBody('text');
     $html = $pmail->getMessageBody('html');
