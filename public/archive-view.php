@@ -1,5 +1,7 @@
 <?php
 
+/* this isn't particularly secure as we're obviously rendering content from third parties */
+
 require_once(dirname(__FILE__) . '/common.php');
 
 $configObject = \AmavisWblist\Config::getInstance();
