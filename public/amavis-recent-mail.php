@@ -32,9 +32,22 @@ if ($_GET['show'] == 'week') {
     // default SQL is for the table to only contain the last week ...
 } elseif ($_GET['show'] == 'all') {
     $header[] = "All time";
-} elseif ($_GET['show'] == 'day') {
-    $header[] = "Last day only";
-    $sql_where[] = " time_iso >= NOW() - INTERVAL '1' DAY ";
+} elseif (preg_match('/(\d){1}day/', $_GET['show'], $matches)) {
+    $count = (int)$matches[1];
+    $day_start = date('Y-m-d 00:00:00', strtotime("$count days ago"));
+    $day_end = date('Y-m-d 23:59:59', strtotime("$count days ago"));
+    $header[] = "Between $day_start and $day_end";
+    $sql_where[] = " time_iso >= '$day_start' AND time_iso <= '$day_end' ";
+
+} elseif (preg_match('/(\d){1}hour/', $_GET['show'], $matches)) {
+    $count = (int)$matches[1];
+
+    $start = date('Y-m-d H:00:00', strtotime("$count hours ago"));
+    $end = date('Y-m-d H:59:59', strtotime("$count hours ago"));
+
+    $header[] = "Between $start and $end";
+
+    $sql_where[] = " time_iso >= '$start' AND time_iso <= '$end' ";
 } else {
     // ($_GET['show'] == 'sixty') {
     $header[] = "Last 60 minutes only";
@@ -43,15 +56,15 @@ if ($_GET['show'] == 'week') {
 
 
 if (array_key_exists('level', $_GET)) {
-    if($_GET['level'] !== '') {
-        $level = (int) $_GET['level'];
+    if ($_GET['level'] !== '') {
+        $level = (int)$_GET['level'];
         $header[] = "Spam level >= $level";
         $sql_where[] = " bspam_level >= $level ";
     }
 }
 if (array_key_exists('levellt', $_GET)) {
-    if($_GET['levellt'] !== '') {
-        $levellt = (int) $_GET['levellt'];
+    if ($_GET['levellt'] !== '') {
+        $levellt = (int)$_GET['levellt'];
         $header[] = "Spam level <= $levellt";
         $sql_where[] = " bspam_level <= $levellt ";
     }
@@ -88,17 +101,17 @@ if (!empty($_GET['quarantined_only']) && $_GET['quarantined_only'] == 'yes') {
 }
 
 if (!empty($_GET['sender'])) {
-	$sender = $_GET['sender'];
-	$header[] = 'Sender matching ' . htmlspecialchars($_GET['sender']);
-	$sender = $db->quote("%$sender%");
-	$sql_where[] = "sender.email LIKE $sender ";
+    $sender = $_GET['sender'];
+    $header[] = 'Sender matching ' . htmlspecialchars($_GET['sender']);
+    $sender = $db->quote("%$sender%");
+    $sql_where[] = "sender.email LIKE $sender ";
 }
 
 if (!empty($_GET['recipient'])) {
-	$recipient = $_GET['recipient'];
-	$header[] = 'Recipient matching ' . htmlspecialchars($_GET['recipient']);
-	$recipient = $db->quote("%$recipient%");
-	$sql_where[] = "recip.email LIKE $recipient ";
+    $recipient = $_GET['recipient'];
+    $header[] = 'Recipient matching ' . htmlspecialchars($_GET['recipient']);
+    $recipient = $db->quote("%$recipient%");
+    $sql_where[] = "recip.email LIKE $recipient ";
 }
 
 $subject_sql = '';
@@ -175,11 +188,11 @@ foreach ($rows as $k => $r) {
     $archive_check[$k] = $r['message_id'];
 }
 
-if(is_callable($config['in_archive'])) {
+if (is_callable($config['in_archive'])) {
     $archive_lookup = $config['in_archive']($archive_check);
 }
 
-foreach($rows as $k => $r) {
+foreach ($rows as $k => $r) {
     if (is_resource($r['mail_id'])) {
         $mail_id = stream_get_contents($r['mail_id']);
     } else {
@@ -195,7 +208,7 @@ foreach($rows as $k => $r) {
 
     $in_archive = false;
     $archive_url = false;
-    if(isset($archive_lookup[$k]) && $archive_lookup[$k]['in_archive']) {
+    if (isset($archive_lookup[$k]) && $archive_lookup[$k]['in_archive']) {
         $in_archive = true;
         $archive_url = $archive_check[$k]['url']; /* perhaps? */
     }
@@ -242,7 +255,6 @@ $form->setContentOptions($CONTENT_VALUES);
 $form->isValid($_GET);
 
 $template->assign('form', $form);
-
 
 
 $template->assign('_up_down_msgs_time_num', _up_down('msgs.time_num'));
