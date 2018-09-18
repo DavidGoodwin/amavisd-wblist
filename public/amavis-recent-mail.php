@@ -34,16 +34,16 @@ if ($_GET['show'] == 'week') {
     $header[] = "All time";
 } elseif (preg_match('/(\d){1}day/', $_GET['show'], $matches)) {
     $count = (int)$matches[1];
-    $day_start = date('Y-m-d 00:00:00', strtotime("$count days ago"));
-    $day_end = date('Y-m-d 23:59:59', strtotime("$count days ago"));
+    $day_start = date('Y-m-d 00:00:00', strtotime("$count days ago")) . date_default_timezone_get();
+    $day_end = date('Y-m-d 23:59:59', strtotime("$count days ago")) . date_default_timezone_get();
     $header[] = "Between $day_start and $day_end";
     $sql_where[] = " time_iso >= '$day_start' AND time_iso <= '$day_end' ";
 
 } elseif (preg_match('/(\d){1}hour/', $_GET['show'], $matches)) {
     $count = (int)$matches[1];
 
-    $start = date('Y-m-d H:00:00', strtotime("$count hours ago"));
-    $end = date('Y-m-d H:59:59', strtotime("$count hours ago"));
+    $start = date('Y-m-d H:00:00', strtotime("$count hours ago")) . date_default_timezone_get();
+    $end = date('Y-m-d H:59:59', strtotime("$count hours ago")) . date_default_timezone_get();
 
     $header[] = "Between $start and $end";
 
