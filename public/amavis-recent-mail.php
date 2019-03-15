@@ -23,7 +23,7 @@ $page_size = 500;
 $sql_where = [];
 
 if (empty($_GET['show'])) {
-    $_GET['show'] = 'sixty';
+    $_GET['show'] = '0hour';
 }
 
 if ($_GET['show'] == 'week') {
@@ -49,12 +49,7 @@ if ($_GET['show'] == 'week') {
 
     $sql_where[] = " time_iso >= '$start' AND time_iso <= '$end' ";
 
-} else {
-    // ($_GET['show'] == 'sixty') {
-    $header[] = "Last 60 minutes only";
-    $sql_where[] = " time_iso >= NOW() - INTERVAL '1' HOUR ";
-}
-
+} 
 
 if (array_key_exists('level', $_GET)) {
     if ($_GET['level'] !== '') {
@@ -139,6 +134,13 @@ if (!empty($_GET['content'])) {
 
 $where_sql = '';
 
+if(!empty($_GET['spam_rule'])) {
+	$spam_rule = preg_replace('/[^-a-z0-9_]/i', '', $_GET['spam_rule']);
+
+	$sql_where[] = " msgs.message_id IN (SELECT message_id FROM mail_spam_scores WHERE rule_name = '$spam_rule' ) ";
+
+}
+
 if (!empty($sql_where)) {
     $where_sql = " AND " . implode(" AND ", $sql_where);
 }
@@ -165,8 +167,6 @@ $sql = "SELECT now()-time_iso AS age,
         WHERE msgs.content IS NOT NULL $where_sql $order_sql";
 
 #  content    char(1),                   -- content type: V/B/S/s/M/H/O/C: -- virus/banned/spam(kill)/spammy(tag2)/bad-mime/bad-header/oversized/clean
-
-error_log($sql);
 
 
 try {
@@ -224,9 +224,9 @@ foreach ($rows as $k => $r) {
     $in_archive = false;
     $archive_url = false;
 
-    if (isset($archive_lookup[$k]) && $archive_lookup[$k]['in_archive']) {
+    if (isset($archive_lookup[$k]) && $archive_lookup[$k]['in_archive'] && isset($archive_lookup[$k]['url'])) {
         $in_archive = true;
-        $archive_url = $archive_check[$k]['url']; /* perhaps? */
+        $archive_url = $archive_lookup[$k]['url']; /* perhaps? */
     }
 
     $r['archive_url'] = $archive_url;
@@ -264,10 +264,18 @@ $template->assign('raw_count', $raw_count); // total results
 $template->assign('header', $header);
 $template->assign('quarantined_only', $quaranatined_only);
 
+$rules = ['' => '[none]'];
+$rows = $db->query("SELECT rule_name, count(rule_name) as count from mail_spam_scores group by rule_name ORDER BY count DESC");
+foreach($rows as $row) {
+	$name = $row['rule_name'];
+	$count = $row['count'];
+	$rules[$name] = "{$name} ($count)";
+}
+
 
 $form = new \AmavisWblist\Form\QuarantineSearch();
 $form->setContentOptions($CONTENT_VALUES);
-
+$form->setSpamRules($rules);
 $form->isValid($_GET);
 
 $template->assign('form', $form);

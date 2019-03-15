@@ -58,7 +58,6 @@ class QuarantineSearch extends AbstractForm
 
         $type_dropdown = new \Zend_Form_Element_Select('content');
         $type_dropdown->setLabel('Type');
-
         $type_dropdown->setRequired(false);
 
         $form->addElement($type_dropdown);
@@ -85,12 +84,24 @@ class QuarantineSearch extends AbstractForm
         $quarantined->setUncheckedValue('no');
         $form->addElement($quarantined);
 
+	$spam_rules = new \Zend_Form_Element_Select('spam_rule');
+	$spam_rules->setLabel("Filter by spam rule?");
+	$spam_rules->setRequired(false);
+
+	$form->addElement($spam_rules);
 
         $submit = new \Zend_Form_Element_Submit('submit');
         $form->addElement($submit);
 
         $this->form = $form;
 
+    }
+
+    public function setSpamRules(array $rules) {
+       $el = $this->form->getElement('spam_rule');
+       if($el !== null) {
+           $el->setMultiOptions($rules);
+       }
     }
 
     /**
