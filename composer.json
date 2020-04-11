@@ -1,5 +1,5 @@
 {
-  "name": "davidgoodwin/amavisd-wblist",
+  "name": "palepurple/amavisd-wblist",
   "description": "Amavisd Admin Web UI.",
   "keywords": [
     "php",
@@ -15,8 +15,8 @@
     "psr/log": "1.*"
   },
   "require-dev": {
-    "jakub-onderka/php-parallel-lint": "^1.0",
-    "vimeo/psalm": "^1.0"
+    "php-parallel-lint/php-parallel-lint": "^1.0",
+    "vimeo/psalm": "^3.0"
   },
   "autoload": {
     "psr-4": {

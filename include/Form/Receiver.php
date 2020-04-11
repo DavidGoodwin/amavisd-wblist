@@ -45,7 +45,7 @@ class Receiver extends AbstractForm
         $fn->addFilter(new \Zend_Filter_StringTrim());
 
         $fn->setRequired(true);
-        $fn->addValidator(new \Zend_Validate_StringLength(0, 255));
+        $fn->addValidator(new \Zend_Validate_StringLength(['min' => 0, 'max' => 255]));
 
         $form->addElement($fn);
 

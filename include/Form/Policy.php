@@ -113,7 +113,7 @@ class Policy extends AbstractForm {
                     $element->addValidator(new \Zend_Validate_Float('en_GB'));
                 }
 
-                $element->addValidator(new \Zend_Validate_StringLength(0, $spec['maxlength']));
+                $element->addValidator(new \Zend_Validate_StringLength(['min' => 0, 'max' => $spec['maxlength']]));
                 $element->addFilter(new \Zend_Filter_StringTrim());
                 $element->setRequired($spec['required']);
 
