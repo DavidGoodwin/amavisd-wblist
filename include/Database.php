@@ -99,6 +99,9 @@ class Database
             $stmt->execute($params);
             switch($querytype) {
                 case "INSERT":
+                /**
+                 * @psalm-suppress RedundantCondition
+                 */
                 case "UPDATE":
                 case "INSERT":
                     $rows_affected = $stmt->rowCount();
