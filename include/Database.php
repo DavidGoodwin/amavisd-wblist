@@ -111,10 +111,6 @@ class Database
         }
         catch(\PDOException $e) {
             throw $e;
-            var_dump($sql);
-            var_dump($params);
-            var_dump($e->getMessage());
-            die('sql query failed.');
         }
         return $rows;
     }
