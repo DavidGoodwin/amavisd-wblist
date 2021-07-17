@@ -26,8 +26,8 @@ abstract class AbstractForm implements Form
     /**
      * @return bool
      */
-    public function isValid(array $data) {
-        return $this->form->isValid($data);
+    public function isValid(array $post) {
+        return $this->form->isValid($post);
     }
 
 

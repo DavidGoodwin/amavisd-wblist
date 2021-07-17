@@ -97,20 +97,13 @@ class Database
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute($params);
-            switch($querytype) {
-                case "INSERT":
-                /**
-                 * @psalm-suppress RedundantCondition
-                 */
-                case "UPDATE":
-                case "INSERT":
+            if ($querytype == 'INSERT' || $querytype == 'UPDATE' || $querytype == 'DELETE') {
                     $rows_affected = $stmt->rowCount();
                     $rows = array('rows_affected' => $rows_affected );
-                    break;
-                case "SELECT":
+            }
+            elseif ($querytype == 'SELECT') {
                     $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-                    break;
-                }
+            }
         }
         catch(\PDOException $e) {
             throw $e;
