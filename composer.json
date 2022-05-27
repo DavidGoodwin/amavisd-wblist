@@ -6,8 +6,8 @@
     "amavisd",
     "sysadmin"
   ],
-  "license": "GPLv2",
-  "preferred-install": "dist",
+  "license": "GPL-2.0-only",
+  
   "require": {
     "shardj/zf1-future": "^1.12",
     "smarty/smarty": "^3.1.0",
