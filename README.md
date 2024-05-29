@@ -23,7 +23,7 @@ So if you're running amavisd, this can help you -
 ## Requirements 
 
  1. Amavisd-new (e.g. v 2.10.1 ish) with appropriate config to use @lookup\_sql\_dsn
- 2. PHP 7+ (also works with PHP 5.6+)
+ 2. PHP 7 or 8+ (should work with PHP 5.6+)
  3. PostgreSQL or MySQL backend (I've not tested MySQL, but it ought to work).
 
 ## Installation instructions

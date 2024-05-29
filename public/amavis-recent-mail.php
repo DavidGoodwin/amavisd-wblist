@@ -127,9 +127,9 @@ $content_sql = '';
 if (!empty($_GET['content'])) {
     $content = $_GET['content'];
     if ($content != 'A' && isset($CONTENT_VALUES[$content])) {
-        $sql_where[] = " msgs.content = '{$_GET['content']}' ";
+        $sql_where[] = " msgs.content = '{$content}' ";
+        $header[] = "Type : {$CONTENT_VALUES[$content]} ";
     }
-    $header[] = "Type : {$CONTENT_VALUES[$content]} ";
 }
 
 $where_sql = '';

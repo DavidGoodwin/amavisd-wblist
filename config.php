@@ -27,6 +27,9 @@ $config = [
 // allow this to orderride config...
 $local_config = dirname(__FILE__) . '/config.local.php';
 if (file_exists($local_config) && is_readable($local_config)) {
+    /**
+     * @psalm-suppress MissingFile
+     */
     require_once($local_config);
 }
 

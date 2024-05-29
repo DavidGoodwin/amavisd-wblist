@@ -33,7 +33,7 @@ if(!empty($_POST['mail_id'])) {
         exit(1);
     }
 }
-elseif(!empty($_POST['message_id'])) {
+else {
 
     $message_id = $_POST['message_id'];
     $message_id = base64_decode($message_id);
@@ -47,10 +47,6 @@ elseif(!empty($_POST['message_id'])) {
     $mail = $config['get_from_archive']($message_id);
 
     $mail_body = $mail['mail_text'];
-}
-else {
-    echo json_Encode(array('status' => 'fail', 'message' => 'no mail_id/message_id'));
-    exit(0);
 }
 
 $what = 'ham';
