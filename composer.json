@@ -11,12 +11,12 @@
   "require": {
     "shardj/zf1-future": "^1.12",
     "smarty/smarty": "^3|^4",
-    "php-mime-mail-parser/php-mime-mail-parser": "^2.11.0",
+    "php-mime-mail-parser/php-mime-mail-parser": "*",
     "psr/log": "1.*"
   },
   "require-dev": {
     "php-parallel-lint/php-parallel-lint": "^1.0",
-    "vimeo/psalm": "^4.0"
+    "psalm/phar": "*"
   },
   "autoload": {
     "psr-4": {
@@ -25,7 +25,7 @@
   },
   "scripts": {
     "lint": "php vendor/bin/parallel-lint --exclude vendor/ .",
-    "psalm": "php vendor/bin/psalm ",
+    "psalm": "php vendor/bin/psalm.phar ",
     "build" : [
         "@lint",
         "@psalm"
