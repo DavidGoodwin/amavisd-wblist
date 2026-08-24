@@ -10,7 +10,7 @@
   
   "require": {
     "shardj/zf1-future": "^1.12",
-    "smarty/smarty": "^3|^4",
+    "smarty/smarty": "^4.5.7",
     "php-mime-mail-parser/php-mime-mail-parser": "*",
     "psr/log": "1.*"
   },

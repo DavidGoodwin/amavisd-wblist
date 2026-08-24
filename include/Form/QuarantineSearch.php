@@ -97,7 +97,7 @@ class QuarantineSearch extends AbstractForm
 
     }
 
-    public function setSpamRules(array $rules) {
+    public function setSpamRules(array $rules): void {
        $el = $this->form->getElement('spam_rule');
        if($el !== null) {
            $el->setMultiOptions($rules);

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="6.16.1@f1f5de594dc76faf8784e02d3dc4716c91c6f6ac">
+  <file src="config.php">
+    <UnusedVariable>
+      <code><![CDATA[$config]]></code>
+    </UnusedVariable>
+  </file>
+  <file src="include/Database.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[rollback]]></code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedReturnValue>
+      <code><![CDATA[bool]]></code>
+      <code><![CDATA[bool]]></code>
+    </PossiblyUnusedReturnValue>
+  </file>
+  <file src="include/Form/AbstractForm.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getValues()]]></code>
+      <code><![CDATA[public function isValid(array $post) {]]></code>
+      <code><![CDATA[public function render() {]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="include/Form/QuarantineSearch.php">
+    <UndefinedMagicMethod>
+      <code><![CDATA[setMultiOPtions]]></code>
+      <code><![CDATA[setMultiOptions]]></code>
+    </UndefinedMagicMethod>
+  </file>
+  <file src="include/Form/Receiver.php">
+    <UndefinedMagicMethod>
+      <code><![CDATA[setMultiOptions]]></code>
+    </UndefinedMagicMethod>
+    <UnusedVariable>
+      <code><![CDATA[$key]]></code>
+    </UnusedVariable>
+  </file>
+  <file src="include/Form/WhitelistBlacklist.php">
+    <UndefinedMagicMethod>
+      <code><![CDATA[setMultiOptions]]></code>
+      <code><![CDATA[setMultiOptions]]></code>
+    </UndefinedMagicMethod>
+  </file>
+  <file src="include/Template.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getInstance]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="public/amavis-recent-mail.php">
+    <UnusedVariable>
+      <code><![CDATA[$content_sql]]></code>
+      <code><![CDATA[$in_archive_list]]></code>
+      <code><![CDATA[$in_archive_list]]></code>
+      <code><![CDATA[$offset]]></code>
+      <code><![CDATA[$quaranatined_only_sql]]></code>
+      <code><![CDATA[$quarantined_only]]></code>
+      <code><![CDATA[$quarantined_only]]></code>
+      <code><![CDATA[$search_count]]></code>
+      <code><![CDATA[$subject_sql]]></code>
+    </UnusedVariable>
+  </file>
+  <file src="public/archive-view.php">
+    <UnusedVariable>
+      <code><![CDATA[$rest]]></code>
+    </UnusedVariable>
+  </file>
+  <file src="public/common.php">
+    <UnusedVariable>
+      <code><![CDATA[$config]]></code>
+    </UnusedVariable>
+  </file>
+</files>
